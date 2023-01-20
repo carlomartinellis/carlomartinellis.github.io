@@ -1,0 +1,15 @@
+@media (min-width: 1366px) and (min-height: 768px) {
+    ::-webkit-scrollbar {
+        width: 0 !important;
+    }
+} 
+@media (max-width: 365px) and (orientation: portrait) {
+    body, .video-background {
+        height: 100vh;
+        width: 100vw;
+    }
+}
+
+  
+
+
