@@ -4,8 +4,8 @@ setInterval(function(){
     text.style.color = getRandomColor();
     // Randomize the text's horizontal and vertical position
     text.style.transform = "translate(" + Math.random() * 20 + "px, " + Math.random() * 20 + "px)";
-    text.style.filter = "blur(" + Math.random() * 5 + "px)";
-}, 100);
+    text.style.filter = "blur(" + Math.random() * 2 + "px)";
+}, 80);
 
 function getRandomColor() {
   var letters = "0123456789ABCDEF";
