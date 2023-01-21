@@ -1,8 +1,9 @@
-var text = document.querySelector(".text-3xl");
-
 setInterval(function(){
-  text.style.color = getRandomColor();
-  text.style.transform = "translate(0px, " + Math.random() * 20 + "px)";
+    // Randomize the text's color
+    text.style.color = getRandomColor();
+    // Randomize the text's horizontal position and add a blur effect
+    text.style.transform = "translate(" + Math.random() * 20 + "px, 0px)";
+    text.style.filter = "blur(" + Math.random() * 3 + "px)";
 }, 100);
 
 function getRandomColor() {
