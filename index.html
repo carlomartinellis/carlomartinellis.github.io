@@ -108,21 +108,6 @@
   
     </div>
 </div>
-/* disable autoplay if iphone is low on battery */
-<script type="text/javascript">
-var promise = $('#videoElement').play();
-
-if (promise !== undefined) {
-  promise.then(_ => {
-   // Autoplay was successful
-  }).catch(error => {
-   $('#videoElement').remove()
- });
-
-}
-</script>
-
-
 
   <script src="logo.js"></script>
   <script>
@@ -131,5 +116,6 @@ if (promise !== undefined) {
         video.play();
     }
 </script>
+
 </body>
 </html>
