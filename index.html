@@ -123,6 +123,22 @@
   }
 </script>
 
+<script>
+  // Create an array of colors to cycle through
+  const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#00ffff", "#ff00ff"];
+  let currentColor = 0;
+  
+  // Function to change the background color
+  function changeColor() {
+    document.querySelector(".color-background").style.backgroundColor = colors[currentColor];
+    currentColor = (currentColor + 1) % colors.length;
+  }
+  
+  // Run the changeColor function every 1000 milliseconds (1 second)
+  setInterval(changeColor, 1000);
+</script>
+
+
 
 </body>
 </html>
