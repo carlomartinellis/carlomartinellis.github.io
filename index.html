@@ -48,59 +48,6 @@
             color: white;
             font-family: 'Noto Sans JP', sans-serif;
               }
-      
-          // GLITCH LOGO ATTEMPT
-
-    .glitch
-    color: white
-    font-family: sans-serif
-    font-weight: 800
-    position: relative
-    font-size: 100px
-    padding: 30px
-    
-    .glitch::before, glitch::after
-    padding: 30px
-    color: white
-    content: "Glitch"
-    position: absolute
-    width: 100%
-    height: 100%
-    background: black
-    overflow: hidden
-    top: 0
-  
-    .glitch::before
-    left: 3px
-    text-shadow: -2px 0 red
-    animation-name: glitch-animation-1
-    animation-duration: 2s
-    animation-timing-function: linear
-    animation-delay: 0s
-    animation-iteration-count: infinite
-    animation-direction: reverse-alternate
-    
-    .glitch::after
-    left: -3px
-    text-shadow: -2px 0 blue
-    animation-name: glitch-animation-2
-    animation-duration: 2s
-    animation-timing-function: linear
-    animation-delay: 0s
-    animation-iteration-count: infinite
-    animation-direction: reverse-alternate
-  
-@keyframes glitch-animation-1
-  $steps: 20
-  @for $i from 0 through $steps 
-    #{percentage($i*(1/$steps))} 
-      clip: rect(random(150)+px, 350px, random(150)+px, 30px)
-    
-@keyframes glitch-animation-2
-  $steps: 20
-  @for $i from 0 through $steps 
-    #{percentage($i*(1/$steps))} 
-      clip: rect(random(150)+px, 350px, random(150)+px, 30px)
         
             /* Social links */
 
@@ -153,7 +100,7 @@
     
     // H1 TESTO CON ANIMAZIONE
   <div class="text-overlay">
-     <h1 class="text-3xl glitch">Carlo Martinelli</h1>
+     <h1 class="text-3xl">Carlo Martinelli</h1>
   </div>
 
     // SOCIAL LINKS
