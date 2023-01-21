@@ -5,7 +5,7 @@ setInterval(function(){
     text.style.color = getRandomColor();
     // Randomize the text's horizontal position and add a blur effect
     text.style.transform = "translate(" + Math.random() * 20 + "px, 0px)";
-    text.style.filter = "blur(" + Math.random() * 3 + "px)";
+    text.style.filter = "blur(" + Math.random() * 5 + "px)";
 }, 100);
 
 function getRandomColor() {
