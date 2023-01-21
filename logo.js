@@ -1,3 +1,5 @@
+var text = document.querySelector(".text-3xl");
+
 setInterval(function(){
     // Randomize the text's color
     text.style.color = getRandomColor();
