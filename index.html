@@ -117,5 +117,22 @@
     }
 </script>
 
+<script type="text/javascript">
+  var video = document.getElementById("bg-video");
+  if (!video.muted) {
+    video.muted = true;
+  }
+  var promise = video.play();
+
+  if (promise !== undefined) {
+    promise.then(_ => {
+      // Autoplay was successful
+    }).catch(error => {
+      video.remove();
+    });
+  }
+</script>
+
+
 </body>
 </html>
