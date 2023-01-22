@@ -49,6 +49,10 @@
             font-family: 'Noto Sans JP', sans-serif;
 
               }
+              
+              #bouncing-image {
+        position: absolute;
+      }
         
             /* Social links */
 
@@ -81,6 +85,38 @@
   </div>
              <!-- COLORE DI SFONDO -->
    <div class="color-background"></div>
+  
+  
+        <!-- JUMPING FACE -->
+  
+    <img id="bouncing-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Anonim.png/549px-Anonim.png"/>
+    <script>
+      const img = document.getElementById("bouncing-image");
+      let x = 0;
+      let y = 0;
+      let xSpeed = 2;
+      let ySpeed = 2;
+      
+      function updatePosition() {
+        x += xSpeed;
+        y += ySpeed;
+        
+        if (x + img.width >= window.innerWidth || x <= 0) {
+          xSpeed = -xSpeed;
+        }
+        if (y + img.height >= window.innerHeight || y <= 0) {
+          ySpeed = -ySpeed;
+        }
+        
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+      }
+      
+      setInterval(updatePosition, 10);
+    </script>
+
+  
+  
     
       <!-- H1 TESTO CON ANIMAZIONE-->
   <div class="text-overlay">
