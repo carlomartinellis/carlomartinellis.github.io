@@ -100,9 +100,11 @@
   let ySpeed = 2;
   let originalSrc = img.src;
   let images = [];
-for (let i = 1000; i <= 1094; i++) {
+  for (let i = 1000; i <= 1094; i++) {
     images.push(`faccia/${i}.png`);
   }
+
+  let currentImage = 0;
   function updatePosition() {
     x += xSpeed;
     y += ySpeed;
@@ -121,13 +123,22 @@ for (let i = 1000; i <= 1094; i++) {
   setInterval(updatePosition, 10);
   
   img.addEventListener("mouseover", function() {
-    img.src = images[Math.floor(Math.random() * images.length)];
+    currentImage++;
+    if(currentImage >= images.length) {
+      currentImage = 0;
+    }
+    img.src = images[currentImage];
   });
   
   img.addEventListener("mouseout", function() {
     img.src = originalSrc;
   });
+
+  img.addEventListener("click", function() {
+    window.location.href = "parole.html";
+  });
 </script>
+
 
 
 
