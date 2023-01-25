@@ -91,31 +91,45 @@
   
         <!-- JUMPING FACE -->
   
-    <img id="bouncing-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Anonim.png/549px-Anonim.png"/>
-    <script>
-      const img = document.getElementById("bouncing-image");
-      let x = 0;
-      let y = 0;
-      let xSpeed = 2;
-      let ySpeed = 2;
-      
-      function updatePosition() {
-        x += xSpeed;
-        y += ySpeed;
-        
-        if (x + img.width >= window.innerWidth || x <= 0) {
-          xSpeed = -xSpeed;
-        }
-        if (y + img.height >= window.innerHeight || y <= 0) {
-          ySpeed = -ySpeed;
-        }
-        
-        img.style.left = x + "px";
-        img.style.top = y + "px";
-      }
-      
-      setInterval(updatePosition, 10);
-    </script>
+<img id="bouncing-image" src="faccia/1.jpg"/>
+<script>
+  const img = document.getElementById("bouncing-image");
+  let x = 0;
+  let y = 0;
+  let xSpeed = 2;
+  let ySpeed = 2;
+  let originalSrc = img.src;
+  let images = [];
+  for (let i = 1; i <= 100; i++) {
+    images.push(`faccia/${i}.jpg`);
+  }  
+  function updatePosition() {
+    x += xSpeed;
+    y += ySpeed;
+    
+    if (x + img.width >= window.innerWidth || x <= 0) {
+      xSpeed = -xSpeed;
+    }
+    if (y + img.height >= window.innerHeight || y <= 0) {
+      ySpeed = -ySpeed;
+    }
+    
+    img.style.left = x + "px";
+    img.style.top = y + "px";
+  }
+  
+  setInterval(updatePosition, 10);
+  
+  img.addEventListener("mouseover", function() {
+    img.src = images[Math.floor(Math.random() * images.length)];
+  });
+  
+  img.addEventListener("mouseout", function() {
+    img.src = originalSrc;
+  });
+</script>
+
+
 
   
   
