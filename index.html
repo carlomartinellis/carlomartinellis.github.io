@@ -106,37 +106,32 @@ for (let i = 100; i <= 194; i++) {
   function updatePosition() {
     x += xSpeed;
     y += ySpeed;
-    
-   if (x + img.width >= window.innerWidth || x <= 0) {
-    xSpeed = -xSpeed;
-    x = x + xSpeed;
-}
-if (y + img.height >= window.innerHeight || y <= 0) {
-    ySpeed = -ySpeed;
-    y = y + ySpeed;
-}
+    if (x + img.width >= window.innerWidth || x <= 0) {
+      xSpeed = -xSpeed;
+    }
+    if (y + img.height >= window.innerHeight || y <= 0) {
+      ySpeed = -ySpeed;
+    }
 
-    
     img.style.left = x + "px";
     img.style.top = y + "px";
   }
-  
- let intervalId;
 
-img.addEventListener("mouseover", function() {
+  let intervalId;
+
+  img.addEventListener("mouseover", function() {
     clearInterval(intervalId);
     img.src = images[Math.floor(Math.random() * images.length)];
-});
+  });
 
-img.addEventListener("mouseout", function() {
+  img.addEventListener("mouseout", function() {
     img.src = originalSrc;
     intervalId = setInterval(updatePosition, 10);
-});
-
-intervalId = setInterval(updatePosition, 10);
-
   });
+
+  intervalId = setInterval(updatePosition, 10);
 </script>
+
 
 
 
