@@ -98,11 +98,12 @@
   let y = 0;
   let xSpeed = 2;
   let ySpeed = 2;
-  let originalSrc = img.src;
+  let currentImage = 0;
   let images = [];
-for (let i = 100; i <= 194; i++) {
+  for (let i = 100; i <= 194; i++) {
     images.push(`faccia/${i}.png`);
   }
+
   function updatePosition() {
     x += xSpeed;
     y += ySpeed;
@@ -112,25 +113,30 @@ for (let i = 100; i <= 194; i++) {
     if (y + img.height >= window.innerHeight || y <= 0) {
       ySpeed = -ySpeed;
     }
-
     img.style.left = x + "px";
     img.style.top = y + "px";
   }
 
-  let intervalId;
+  function updateImage() {
+    currentImage++;
+    if (currentImage >= images.length) {
+      currentImage = 0;
+    }
+    img.src = images[currentImage];
+  }
 
+  let intervalId;
   img.addEventListener("mouseover", function() {
-    clearInterval(intervalId);
-    img.src = images[Math.floor(Math.random() * images.length)];
+    intervalId = setInterval(updateImage, 50);
   });
 
   img.addEventListener("mouseout", function() {
-    img.src = originalSrc;
-    intervalId = setInterval(updatePosition, 10);
+    clearInterval(intervalId);
   });
 
   intervalId = setInterval(updatePosition, 10);
 </script>
+
 
 
 
