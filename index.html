@@ -91,7 +91,7 @@
   
         <!-- JUMPING FACE -->
   
-<img id="bouncing-image" src="faccia/100.png"/>
+<img id="bouncing-image" src="faccia/1000.png"/>
 <script>
   const img = document.getElementById("bouncing-image");
   let x = 0;
@@ -100,7 +100,7 @@
   let ySpeed = 2;
   let originalSrc = img.src;
   let images = [];
-  for (let i = 100; i <= 194; i++) {
+  for (let i = 1000; i <= 1094; i++) {
     images.push(`faccia/${i}.png`);
   }
 
@@ -118,9 +118,10 @@
     
     img.style.left = x + "px";
     img.style.top = y + "px";
+    setTimeout(updatePosition, 10); // to call the function again and again
   }
   
-  setInterval(updatePosition, 10);
+  updatePosition(); // call the function for the first time
   
   img.addEventListener("mouseover", function() {
     currentImage++;
@@ -133,11 +134,12 @@
   img.addEventListener("mouseout", function() {
     img.src = originalSrc;
   });
-
+  
   img.addEventListener("click", function() {
-    window.location.href = "parole.html";
+    location.href = "parole.html";
   });
 </script>
+
 
 
 
