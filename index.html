@@ -93,7 +93,7 @@
   
         <!-- JUMPING FACE -->
 
-<img id="bouncing-image" src='faccia/100.png'/>
+<img id="bouncing-image" src="faccia/100.png"/>
 <script>
 const img = document.getElementById("bouncing-image");
 let x = 0;
@@ -103,7 +103,7 @@ let ySpeed = 2;
 let currentImage = 0;
 let images = [];
 for (let i = 100; i <= 154; i++) {
-images.push(faccia/${i}.png);
+images.push('faccia/${i}.png');
 }
 
 function updatePosition() {
