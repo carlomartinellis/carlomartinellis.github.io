@@ -137,6 +137,14 @@
 
     intervalId = setInterval(updatePosition, 10);
     setInterval(updateImage,50);
+    });
+
+  img.addEventListener("mouseout", function() {
+    clearInterval(intervalId);
+  });
+
+  intervalId = setInterval(updatePosition, 10);
+</script>
 
 
 
