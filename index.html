@@ -92,52 +92,46 @@
   
   
         <!-- JUMPING FACE -->
-  <img id="bouncing-image" src="faccia/100.png"/>
+ <img id="bouncing-image" src="faccia/100.png"/>
 <script>
-    const img = document.getElementById("bouncing-image");
-    let x = 0;
-    let y = 0;
-    let xSpeed = 2;
-    let ySpeed = 2;
-    let currentImage = 0;
-    let images = [];
-    for (let i = 100; i <= 194; i++) {
-      images.push(`faccia/${i}.png`);
+  const img = document.getElementById("bouncing-image");
+  let x = 0;
+  let y = 0;
+  let xSpeed = 2;
+  let ySpeed = 2;
+  let currentImage = 0;
+  let images = [];
+  for (let i = 100; i <= 194; i++) {
+    images.push(`faccia/${i}.png`);
+  }
+
+  function updatePosition() {
+    x += xSpeed;
+    y += ySpeed;
+    if (x + img.width >= window.innerWidth || x <= 0) {
+      xSpeed = -xSpeed;
     }
-
-    function updatePosition() {
-        x += xSpeed;
-        y += ySpeed;
-        if (x + img.width >= window.innerWidth || x <= 0) {
-            xSpeed = -xSpeed;
-        }
-        if (y + img.height >= window.innerHeight || y <= 0) {
-            ySpeed = -ySpeed;
-        }
-        img.style.left = x + "px";
-        img.style.top = y + "px";
+    if (y + img.height >= window.innerHeight || y <= 0) {
+      ySpeed = -ySpeed;
     }
+    img.style.left = x + "px";
+    img.style.top = y + "px";
+  }
 
-    function updateImage() {
-        currentImage++;
-        if (currentImage >= images.length) {
-            currentImage = 0;
-        }
-        img.src = images[currentImage];
+  function updateImage() {
+    currentImage++;
+    if (currentImage >= images.length) {
+      currentImage = 0;
     }
+    img.src = images[currentImage];
+  }
 
-    let intervalId;
-    img.addEventListener("mouseover", function() {
-      clearInterval(intervalId);
-    });
-
-    img.addEventListener("mouseout", function() {
-      intervalId = setInterval(updatePosition, 10);
-    });
-
-    intervalId = setInterval(updatePosition, 10);
-    setInterval(updateImage,50);
-    });
+  let intervalId;
+  let intervalId_img;
+  img.addEventListener("mouseover", function() {
+    clearInterval(intervalId);
+    intervalId_img = setInterval(updateImage, 50);
+  });
 
   img.addEventListener("mouseout", function() {
     clearInterval(intervalId);
