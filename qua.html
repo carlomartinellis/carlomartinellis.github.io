@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tarot Card</title>
+    <style>
+        /* CSS for the card */
+        .card {
+            width: 300px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* CSS for the card back */
+        .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* CSS for the card front */
+        .card .front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: default;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tarot card -->
+    <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card1.png" alt="Tarot card front">
+    </div>
+
+ <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card2.png" alt="Tarot card front">
+    </div>
+
+ <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card3.png" alt="Tarot card front">
+
+ <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card4.png" alt="Tarot card front">
+
+ <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card5.png" alt="Tarot card front">
+
+ <div class="card">
+        <img class="back" src="back.png" alt="Tarot card back" onclick="document.getElementsByClassName('front')[0].style.display='block'; this.style.display='none';">
+        <img class="front" src="card6.png" alt="Tarot card front">
+    </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
