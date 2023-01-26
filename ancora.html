@@ -41,34 +41,46 @@
 <body>
     <div class="card-container">
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card1.png" alt="Tarot card front">
         </div>
 
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card2.png" alt="Tarot card front">
         </div>
 
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card3.png" alt="Tarot card front">
         </div>
 
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card4.png" alt="Tarot card front">
         </div>
 
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card5.png" alt="Tarot card front">
         </div>
 
         <div class="card">
-            <img class="back" src="back.png" alt="Tarot card back" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+            <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
             <img class="front" src="card6.png" alt="Tarot card front">
         </div>
     </div>
+    
+    <script>
+    var flipped = false;
+    function flipCard(event) {
+        if (flipped) {
+            return false;
+        }
+        flipped = true;
+        event.currentTarget.nextElementSibling.style.display = 'block';
+        event.currentTarget.style.display = 'none';
+    }
+</script>
 </body>
 </html>
