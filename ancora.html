@@ -42,36 +42,35 @@
     <div class="card-container">
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card1.png" alt="Tarot card front">
+            <img class="front" src="card1.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
 
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card2.png" alt="Tarot card front">
+            <img class="front" src="card2.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
 
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card3.png" alt="Tarot card front">
+            <img class="front" src="card3.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
 
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card4.png" alt="Tarot card front">
+            <img class="front" src="card4.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
 
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card5.png" alt="Tarot card front">
+            <img class="front" src="card5.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
 
         <div class="card">
             <img class="back" src="back.png" alt="Tarot card back" onclick="flipCard(event);" this.style.display='none';">
-            <img class="front" src="card6.png" alt="Tarot card front">
+            <img class="front" src="card6.png" alt="Tarot card front" onclick="redirect(event)">
         </div>
-    </div>
-    
-    <script>
+
+ <script>
     var flipped = false;
     function flipCard(event) {
         if (flipped) {
@@ -81,6 +80,27 @@
         event.currentTarget.nextElementSibling.style.display = 'block';
         event.currentTarget.style.display = 'none';
     }
+</script>
+<script>
+document.addEventListener("click", function(event) {
+    if (flipped) {
+        // get the src of the clicked element
+        var src = event.target.src;
+        // check the src and redirect accordingly
+        if (src.endsWith("card1.png")) {
+            window.location.href = "1.html";
+        } else if (src.endsWith("card2.png")) {
+            window.location.href = "2.html";
+        } else if (src.endsWith("card3.png")) {
+            window.location.href = "3.html";
+        } else if (src.endsWith("card4.png")) {
+            window.location.href = "4.html";
+        } else if (src.endsWith("card5.png")) {
+            window.location.href = "5.html";
+        } else if (src.endsWith("card6.png")) {
+            window.location.href = "6.html";
+    }
+});
 </script>
 </body>
 </html>
