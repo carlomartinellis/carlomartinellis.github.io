@@ -13,19 +13,32 @@
   
     <title>Test</title>
     <style>
-    .form {
-      font-weight: 13px;
-      }
+.quiz-container p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: red;
+}
+
+.quiz-container  {
+    color: purple;
+}
+
       
     </style>
   </head>
   <body>
     
 <div id="quiz">
-  <h1>Quiz</h1>
+  <h1>Oracolo</h1>
+  Grazie a questo avanzatissimo test posso dirti con esattezza chi sei! Risultati Garantiti e Assurdi! <p>
+  <div class="quiz-container">
+
   <form id="form">
+    
     <!-- quiz questions will be dynamically generated here -->
   </form>
+  </div>
   <button id="submit-button">Submit</button>
   <div id="result">
     <!-- result will be displayed here -->
@@ -34,37 +47,426 @@
 
 </body>
 <script>
-const questions = [  {    text: "Question 1",    answers: [      {text: "#1", weight: [0, 0, 0, 5, 0]},
-      {text: "#2", weight: [0, 0, 0, 0, 5]},
-      {text: "#3", weight: [0, 5, 0, 0, 0]},
-      {text: "#4", weight: [5, 0, 0, 0, 0]},
-      {text: "#5", weight: [0, 0, 5, 0, 0]}
+
+const questions = [
+  {
+    text: "Sono felice di star partecipando a questo quiz.",
+    answers: [
+      {
+        text: "Per niente  ",
+        weight: [3, 0, 0, 0, 0, 3, 2, 4, 0, 0, 0, 0]
+
+      },
+      {
+        text: "Abbastanza",
+        weight: [2, 3, 2, 2, 3, 4, 2, 3, 4, 3, 5, 0]
+      },
+      {
+        text: "Assaje",
+        weight: [0, 0, 3, 3, 0, 2, 4, 0, 0, 3, 0, 5]
+      },
+      {
+        text: "Mah",
+        weight: [0, 0, 0, 0, 5, 4, 0, 4, 4, 3, 5, 0]
+      }
+      
     ]
   },
   {
-    text: "Question 2",
+    text: "Conviene partire presto per trovare posto in spiaggia.",
     answers: [
-      {text: "#1", weight: [0, 0, 5, 0, 0]},
-      {text: "#2", weight: [0, 5, 0, 0, 0]},
-      {text: "#3", weight: [5, 0, 0, 0, 0]},
-      {text: "#4", weight: [0, 0, 0, 5, 0]},
-      {text: "#5", weight: [0, 0, 0, 0, 5]}
+      {
+        text: "Ieri sono andato a letto oggi e non mi pare il caso",
+        weight: [0, 0, 0, 0, 2, 0, 0, 0, 0, 4, 5, 0]
+      },
+      {
+        text: "Mi sembra una ovvia banalità banale",
+        weight: [1, 4, 1, 4, 3, 0, 2, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Meglio ancora prima",
+        weight: [1, 0, 4, 4, 3, 2, 2, 3, 0, 5, 0, 5]
+      }
     ]
   },
-  // ... 8 more questions
+
+  {
+    text: "Gli alieni sono pandimensionali e lottano insieme a noi",
+    answers: [
+      {
+        text: "Tom De Longe era peggio come chitarrista dei Blink182",
+        weight: [0, 0, 2, 3, 0, 0, 2, 0, 0, 0, 0, 0]
+      },
+      {
+        text: "Eh?",
+        weight: [5, 5, 3, 3, 5, 5, 3, 5, 0, 0, 0, 3]
+      },
+      {
+        text: "Non buttiamo perle ai porci",
+        weight: [0, 0, 3, 2, 0, 0, 0, 0, 5, 3, 5, 2]
+      }
+    ]
+  },
+  
+  {
+    text: "Il caso non esiste, il caos esiste",
+    answers: [
+      {
+        text: "Ci ho pensato e non capisco la domanda",
+        weight: [5, 3, 0, 2, 3, 3, 3, 5, 0, 3, 0, 0]
+      },
+      {
+        text: "Non ci voglio pensare",
+        weight: [5, 5, 1, 0, 3, 4, 4, 4, 4, 3, 2, 3]
+      },
+      {
+        text: "Ok",
+        weight: [1, 3, 1, 3, 3, 3, 3, 4, 5, 3, 5, 4]
+      }
+    ]
+  },
+
+  {
+    text: "Il Sud Italia è ok ma andrebbe dato ai tedeschi in gestione",
+    answers: [
+      {
+        text: "Eh",
+        weight: [10, 3, 4, 2, 5, 0, 3, 4, 0, 0, 0, 0]
+      },
+      {
+        text: "Il contrario funziona uguale",
+        weight: [0, 0, 0, 0, 0, 0, 0, 0, 8, 4, 5, 3]
+      },
+      {
+        text: "Non capisco che vuoi da me",
+        weight: [6, 5, 2, 3, 5, 5, 2, 5, 0, 3, 0, 0]
+      }
+    ]
+  },
+
+  {
+    text: "Ero depresso prima di iniziare questo test adesso lasciamo perdere",
+    answers: [
+      {
+        text: "Ye",
+        weight: [10, 3, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0]
+      },
+      {
+        text: "E fattela una risata!",
+        weight: [0, 3, 2, 5, 0, 0, 0, 3, 3, 2, 0, 4]
+      },
+      {
+        text: "Ok ma non è rilevante",
+        weight: [2, 1, 2, 0, 2, 2, 0, 0, 4, 3, 5, 0]
+      }
+    ]
+  },
+  
+  {
+    text: "Consumo più musica leggera che pesante",
+    answers: [
+      {
+        text: "Decisamente",
+        weight: [10, 5, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Ma intendevi le droghe?",
+        weight: [0, 0, 3, 2, 3, 3, 4, 0, 3, 8, 0, 0]
+      },
+      {
+        text: "Perirete nelle fiamme",
+        weight: [0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 5, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Mento nei test per ottenere un risultato gradevole",
+    answers: [
+      {
+        text: "Anche in questo momento",
+        weight: [5, 0, 3, 4, 0, 0, 4, 3, 0, 0, 0, 0]
+      },
+      {
+        text: "Solo perché ho poco tempo",
+        weight: [4, 5, 4, 4, 3, 3, 3, 4, 0, 0, 0, 0]
+      },
+      {
+        text: "Non credo",
+        weight: [0, 5, 0, 0, 5, 5, 3, 3, 5, 2, 5, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Piango più guardando un film che per cose reali",
+    answers: [
+      {
+        text: "No",
+        weight: [1, 1, 1, 9, 3, 0, 0, 0, 0, 0, 0, 5]
+      },
+      {
+        text: "Non so",
+        weight: [5, 5, 0, 0, 5, 0, 3, 0, 0, 3, 0, 0]
+      },
+      {
+        text: "Eh",
+        weight: [2, 0, 2, 3, 0, 4, 2, 3, 3, 4, 5, 0]
+      }
+    ]
+  },
+
+  {
+    text: "Se alzo lo sguardo intorno a me vedo almeno una persona simpatica",
+    answers: [
+      {
+        text: "Adesso no ma di solito sì",
+        weight: [2, 2, 3, 2, 2, 3, 2, 2, 0, 0, 0, 0]
+      },
+      {
+        text: "Sempre",
+        weight: [0, 0, 0, 4, 0, 0, 4, 0, 5, 4, 0, 5]
+      },
+      {
+        text: "Simpatia portami via",
+        weight: [3, 2, 3, 3, 2, 0, 2, 3, 0, 2, 5, 0]
+      }
+    ]
+  },
+
+  {
+    text: "Se scoppia la guerra scappo",
+    answers: [
+      {
+        text: "Meglio che scoppiare",
+        weight: [5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Meglio che sparare",
+        weight: [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 0]
+      },
+      {
+        text: "La guerra sono io",
+        weight: [0, 0, 5, 5, 0, 0, 3, 3, 0, 2, 0, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Apprezzo i social network perché",
+    answers: [
+      {
+        text: "Mi aiutano a stare connesso",
+        weight: [5, 5, 2, 5, 5, 2, 5, 2, 0, 3, 0, 0]
+      },
+      {
+        text: "Sono il primo passo verso la mente alveare",
+        weight: [5, 5, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Non ho altra scelta",
+        weight: [1, 1, 1, 0, 2, 2, 2, 0, 5, 3, 5, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Sono stanco di queste domande",
+    answers: [
+      {
+        text: "E di queste risposte",
+        weight: [5, 2, 3, 2, 3, 4, 3, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Mannò",
+        weight: [1, 1, 2, 3, 3, 3, 3, 0, 3, 0, 5, 4]
+      },
+      {
+        text: "Sei simpatico",
+        weight: [0, 3, 2, 3, 2, 2, 3, 0, 3, 3, 4, 3]
+      }
+    ]
+  },
+
+  {
+    text: "Chi crede ai complotti è un complottista",
+    answers: [
+      {
+        text: "Chi crede è perduto in ogni caso",
+        weight: [0, 0, 2, 0, 0, 0, 0, 3, 0, 2, 5, 0]
+      },
+      {
+        text: "Dipende dal complotto",
+        weight: [0, 0, 4, 3, 2, 0, 3, 2, 5, 2, 3, 5]
+      },
+      {
+        text: "Mi pare ovvio",
+        weight: [5, 5, 0, 5, 5, 5, 0, 5, 0, 0, 0, 0]
+      }
+    ]
+  },
+
+  {
+    text: "Ho ben chiaro cos'è la realtà",
+    answers: [
+      {
+        text: "Mah",
+        weight: [4, 5, 3, 2, 5, 3, 2, 3, 0, 0, 0, 0]
+      },
+      {
+        text: "Non proprio",
+        weight: [0, 0, 0, 0, 0, 0, 3, 0, 5, 5, 5, 5]
+      },
+      {
+        text: "Io sì, tu non mi pare",
+        weight: [5, 3, 6, 5, 2, 3, 5, 5, 0, 0, 0, 0]
+      }
+    ]
+  },
+
+  {
+    text: "L'Italia è piena di furbetti",
+    answers: [
+      {
+        text: "Cos'è l'Italia?",
+        weight: [0, 0, 2, 0, 4, 2, 2, 0, 5, 5, 5, 0]
+      },
+      {
+        text: "Cos'è un furbetto?",
+        weight: [5, 0, 5, 3, 2, 2, 3, 2, 0, 2, 3, 0]
+      },
+      {
+        text: "Purtroppo è vero",
+        weight: [5, 5, 0, 3, 5, 5, 0, 5, 0, 0, 0, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Non ascolterei un brano di Charles Manson e non guarderei un quadro di Hitler",
+    answers: [
+      {
+        text: "Cambiamo argomento",
+        weight: [5, 5, 2, 3, 5, 5, 2, 3, 0, 2, 0, 0]
+      },
+      {
+        text: "L'arte è diversa dall'autore",
+        weight: [0, 0, 4, 0, 0, 0, 3, 2, 5, 3, 5, 0]
+      },
+      {
+        text: "Esatto",
+        weight: [4, 2, 2, 4, 0, 0, 2, 3, 0, 0, 0, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Non esistono più le classi sociali",
+    answers: [
+      {
+        text: "Da mezzo secolo",
+        weight: [5, 0, 5, 2, 0, 5, 2, 5, 0, 0, 0, 0]
+      },
+      {
+        text: "Uhm",
+        weight: [5, 5, 3, 3, 4, 5, 3, 0, 0, 0, 0, 0]
+      },
+      {
+        text: "Stai scherzando?",
+        weight: [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5]
+      }
+    ]
+  },
+
+  {
+    text: "Che grande Carlos Malitennli",
+    answers: [
+      {
+        text: "Bravo",
+        weight: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      },
+      {
+        text: "Molto bravo",
+        weight: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+      },
+      {
+        text: "Mah",
+        weight: [5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 5, 0]
+      }
+    ]
+  },
+
+  {
+    text: "Andrà tutto bene",
+    answers: [
+      {
+        text: "Andrà tutto bene",
+        weight: [2, 0, 0, 3, 3, 3, 2, 3, 2, 3, 0, 5]
+      },
+      {
+        text: "Andrà tutto",
+        weight: [4, 0, 0, 0, 0, 0, 2, 0, 2, 3, 0, 0]
+      },
+      {
+        text: "Andrà",
+        weight: [2, 1, 3, 0, 3, 3, 2, 3, 2, 3, 0, 5]
+      }
+    ]
+  },
+  
 ];
 
-const profiles = [  { name: "Profile 1" },  { name: "Profile 2" },  { name: "Profile 3" },  { name: "Profile 4" },  { name: "Profile 5" }];
+const profiles = [
+  {
+    name: "LARVA UMANALE" , link: "profile1.html" 
+  },
+  {
+    name: "NPC (Se non sai cosa vuol dire ancora di più", link: "profile2.html" 
+  },
+  {
+    name: "FURBO RODITORE CAMMORISTA", link: "profile3.html" 
+  },
+  {
+    name: "VENDITORE DI BEVANDE GASSATE INTERIORI", link: "profile4.html" 
+  },
+  {
+    name: "PASSANTE", link: "profile5.html" 
+  },
+  {
+    name: "PAX ANONIMO DI UN RISTORANTE ANONIMO", link: "profile6.html" 
+  },
+  {
+    name: "TRAFFICANTE DI SEMI DI ZUCCA", link: "profile7.html" 
+  },
+  {
+    name: "OPERATORE DELLA PUBBLICA AMMINISTRAZIONE IN VACANZA", link: "profile8.html" 
+  },
+  {
+    name: "ANZIANO SAGGIO DENTRO E FUORI", link: "profile9.html" 
+  },
+  {
+    name: "PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI", link: "profile10.html" 
+  },
+  {
+    name: "CARLO MARTINELLO", link: "profile11.html" 
+  },
+  {
+    name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "profile12.html" 
+  }
+];
+
 
 const form = document.getElementById("form");
 const submitButton = document.getElementById("submit-button");
 const resultDiv = document.getElementById("result");
 
 for (const question of questions) {
+  // Create a paragraph for each question
   const p = document.createElement("p");
   p.textContent = question.text;
   form.appendChild(p);
 
+  // Create radio buttons for each answer
   for (const [i, answer] of question.answers.entries()) {
     const label = document.createElement("label");
     label.textContent = answer.text;
@@ -85,8 +487,30 @@ submitButton.addEventListener("click", event => {
   const formData = new FormData(form);
   const userAnswers = Array.from(formData.entries()).map(([, value]) => parseInt(value));
 
+  const profileScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (const [i, answer] of userAnswers.entries()) {
     const weights = questions[i].answers[answer].weight;
     for (const [j, weight] of weights.entries()) {
+      profileScores[j] += weight;
+    }
+  }
+
+  const bestProfile = getBestProfile(profileScores);
+const profile = profiles[bestProfile];
+resultDiv.innerHTML = `<a href="${profile.link}">${profile.name}</a>`;
+
+});
+
+function getBestProfile(profileScores) {
+  let maxScore = -Infinity;
+  let bestProfile = -1;
+  for (const [i, score] of profileScores.entries()) {
+    if (score > maxScore) {
+      maxScore = score;
+      bestProfile = i;
+    }
+  }
+  return bestProfile;
+}
 </script>
 </html>
