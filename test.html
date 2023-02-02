@@ -10,18 +10,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Unbounded:wght@700&display=swap" rel="stylesheet">
-  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+JP:wght@600&family=Unbounded:wght@700&display=swap" rel="stylesheet">
     <title>Oracolo Assurdo Perfetto</title>
     <style>
         body {
             
             background-color: rgb(200, 255, 3);
             text-align: center;
+            font-family: 'Noto Sans JP', sans-serif;
         }
 .quiz-container p {
+  background-color: rgb(200, 255, 3);
+
     text-align: center;
-    background-image: url(https://media.tenor.com/7j8pzRMz6UkAAAAC/color-trippy.gif);
   font-size: 18px;
+  font-family: 'Noto Sans JP', sans-serif;
   font-weight: bold;
   font-style: italic;
   margin-bottom: 20px;
@@ -30,9 +35,10 @@
 
 .quiz-container  {
     text-align: center;
-    background-color: rgb(42, 136, 165);
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: rgb(0, 0, 0);
     font-weight: bold;
-    color: rgb(247, 9, 9);
+    color: rgb(226, 255, 6);
 }
 
       
@@ -52,7 +58,7 @@
     <!-- quiz questions will be dynamically generated here -->
   </form>
   </div>
-  <button id="submit-button">Submit</button>
+  <button id="submit-button">CALCOLA IL RISULTATO</button>
   <div id="result">
     <!-- result will be displayed here -->
   </div>
@@ -431,37 +437,37 @@ const questions = [
 
 const profiles = [
   {
-    name: "LARVA UMANALE" , link: "profile1.html" 
+    name: "LARVA UMANALE" , link: "/profiles/profile1.html" 
   },
   {
-    name: "NPC (Se non sai cosa vuol dire ancora di più", link: "profile2.html" 
+    name: "NPC (Se non sai cosa vuol dire ancora di più", link: "/profiles/profile2.html" 
   },
   {
-    name: "FURBO RODITORE CAMMORISTA", link: "profile3.html" 
+    name: "FURBO RODITORE CAMMORISTA", link: "/profiles/profile3.html" 
   },
   {
-    name: "VENDITORE DI BEVANDE GASSATE INTERIORI", link: "profile4.html" 
+    name: "VENDITORE DI BEVANDE GASSATE INTERIORI", link: "/profiles/profile4.html" 
   },
   {
-    name: "PASSANTE", link: "profile5.html" 
+    name: "PASSANTE", link: "/profiles/profile5.html" 
   },
   {
-    name: "PAX ANONIMO DI UN RISTORANTE ANONIMO", link: "profile6.html" 
+    name: "PAX ANONIMO DI UN RISTORANTE ANONIMO", link: "/profiles/profile6.html" 
   },
   {
-    name: "TRAFFICANTE DI SEMI DI ZUCCA", link: "profile7.html" 
+    name: "TRAFFICANTE DI SEMI DI ZUCCA", link: "/profiles/profile7.html" 
   },
   {
-    name: "OPERATORE DELLA PUBBLICA AMMINISTRAZIONE IN VACANZA", link: "profile8.html" 
+    name: "OPERATORE DELLA PUBBLICA AMMINISTRAZIONE IN VACANZA", link: "/profiles/profile8.html" 
   },
   {
-    name: "ANZIANO SAGGIO DENTRO E FUORI", link: "profile9.html" 
+    name: "ANZIANO SAGGIO DENTRO E FUORI", link: "/profiles/profile9.html" 
   },
   {
-    name: "PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI", link: "profile10.html" 
+    name: "PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI", link: "/profiles/profile10.html" 
   },
   {
-    name: "CARLO MARTINELLO", link: "profile11.html" 
+    name: "CARLO MARTINELLO", link: "/profiles/profile11.html" 
   },
   {
     name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "profile12.html" 
@@ -492,6 +498,7 @@ for (const question of questions) {
     label.prepend(input);
     form.appendChild(label);
   }
+  
 }
 
 submitButton.addEventListener("click", event => {
@@ -525,5 +532,23 @@ function getBestProfile(profileScores) {
   }
   return bestProfile;
 }
+</script>
+
+<script>
+  function changeBackgroundColor() {
+  // Generate a random RGB color
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  const color = `rgb(${red}, ${green}, ${blue})`;
+
+  // Set the background color with a smooth transition effect
+  document.body.style.transition = "background-color 1s ease-in-out";
+  document.body.style.backgroundColor = color;
+}
+
+// Call the function every 5 seconds
+setInterval(changeBackgroundColor, 5000);
+
 </script>
 </html>
