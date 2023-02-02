@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <style>
+      .color-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          
+}
+
+    h1 {
+      font-family: 'Lobster', cursive;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+  <title>Tutti i magici profili</title>
+</head>
+<body>
+  <h1>Tutti i magici profili</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <ul>
+          <li><a href="/profiles/profile1">LARVA UMANALE</a></li>
+          <li><a href="/profiles/profile2">NPC</a></li>
+          <li><a href="/profiles/profile3">FURBO RODITORE CAMMORISTA</a></li>
+          <li><a href="/profiles/profile4">VENDITORE DI BEVANDE GASSATE INTERIORI</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <ul>
+          <li><a href="/profiles/profile5">PASSANTE</a></li>
+          <li><a href="/profiles/profile6">PAX ANONIMO DI RISTORANTE ANONIMO</a></li>
+          <li><a href="/profiles/profile7">TRAFFICANTE DI SEMI DI ZUCCA</a></li>
+          <li><a href="/profiles/profile8">OPERATORE DELLA PUBBLICA AMMINISTRAZIONE</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <ul>
+          <li><a href="/profiles/profile9">ANZIANO SAGGIO DENTRO E FUORI</a></li>
+          <li><a href="/profiles/profile10">PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI</a></li>
+          <li><a href="/profiles/profile11">CARLO MARTINELLO</a></li>
+          <li><a href="/profiles/profile12">CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+  function changeBackgroundColor() {
+  // Generate a random RGB color
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  const color = `rgb(${red}, ${green}, ${blue})`;
+
+  // Set the background color with a smooth transition effect
+  document.body.style.transition = "background-color 1s ease-in-out";
+  document.body.style.backgroundColor = color;
+}
+
+// Call the function every 5 seconds
+setInterval(changeBackgroundColor, 5000);
+
+  </script>
+</body>
+  
+</html>
