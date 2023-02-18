@@ -551,4 +551,49 @@ function getBestProfile(profileScores) {
 setInterval(changeBackgroundColor, 5000);
 
 </script>
+  
+  <script>
+      const quizContainer = document.querySelector('.quiz-container');
+      const bodyBgColor = window.getComputedStyle(document.body).getPropertyValue('background-color');
+      const quizBgColor = generateRandomColor(bodyBgColor);
+      quizContainer.style.backgroundColor = quizBgColor;
+
+      function generateRandomColor(bgColor) {
+        const bodyColorValues = getRGBValues(bgColor);
+        const randomColorValues = getRandomColorValues();
+        const quizColorValues = calculateQuizColorValues(bodyColorValues, randomColorValues);
+        const quizColor = `rgb(${quizColorValues.r}, ${quizColorValues.g}, ${quizColorValues.b})`;
+        return quizColor;
+      }
+
+      function getRGBValues(color) {
+        const rgbRegex = /rgba?\((\d+), (\d+), (\d+)(, \d+)?\)/;
+        const match = color.match(rgbRegex);
+        if (match) {
+          return {
+            r: parseInt(match[1]),
+            g: parseInt(match[2]),
+            b: parseInt(match[3])
+          };
+        } else {
+          return null;
+        }
+      }
+
+      function getRandomColorValues() {
+        return {
+          r: Math.floor(Math.random() * 256),
+          g: Math.floor(Math.random() * 256),
+          b: Math.floor(Math.random() * 256)
+        };
+      }
+
+      function calculateQuizColorValues(bodyColorValues, randomColorValues) {
+        return {
+          r: (bodyColorValues.r + randomColorValues.r) / 2,
+          g: (bodyColorValues.g + randomColorValues.g) / 2,
+          b: (bodyColorValues.b + randomColorValues.b) / 2
+        };
+      }
+    </script>
 </html>
