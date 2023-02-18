@@ -1,8 +1,13 @@
 var text = document.querySelector(".text-3xl");
+var names = ["carlo martinelli", "marlo cartinelli"];
 
 setInterval(function(){
+    // Randomize the text between the two names
+    var nameIndex = Math.round(Math.random());
+    text.textContent = names[nameIndex];
+
+    // Randomize the text's color, position, and blur effect
     text.style.color = getRandomColor();
-    // Randomize the text's horizontal and vertical position
     text.style.transform = "translate(" + Math.random() * 20 + "px, " + Math.random() * 20 + "px)";
     text.style.filter = "blur(" + Math.random() * 2 + "px)";
 }, 80);
@@ -15,4 +20,3 @@ function getRandomColor() {
   }
   return color;
 }
-
