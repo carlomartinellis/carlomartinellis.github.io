@@ -536,64 +536,63 @@ function getBestProfile(profileScores) {
 
 <script>
   function changeBackgroundColor() {
-  // Generate a random RGB color
-  const red = Math.floor(Math.random() * 256);
-  const green = Math.floor(Math.random() * 256);
-  const blue = Math.floor(Math.random() * 256);
-  const color = `rgb(${red}, ${green}, ${blue})`;
+    // Generate a random RGB color
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+    const color = `rgb(${red}, ${green}, ${blue})`;
 
-  // Set the background color with a smooth transition effect
-  document.body.style.transition = "background-color 1s ease-in-out";
-  document.body.style.backgroundColor = color;
-}
+    // Set the background color with a smooth transition effect
+    document.body.style.transition = "background-color 1s ease-in-out";
+    document.body.style.backgroundColor = color;
 
-// Call the function every 5 seconds
-setInterval(changeBackgroundColor, 5000);
+    // Change the background color of the quiz container
+    const quizContainer = document.querySelector('.quiz-container');
+    const bodyBgColor = window.getComputedStyle(document.body).getPropertyValue('background-color');
+    const quizBgColor = generateRandomColor(bodyBgColor);
+    quizContainer.style.backgroundColor = quizBgColor;
+  }
 
+  // Call the function every 5 seconds
+  setInterval(changeBackgroundColor, 5000);
+
+  function generateRandomColor(bgColor) {
+    const bodyColorValues = getRGBValues(bgColor);
+    const randomColorValues = getRandomColorValues();
+    const quizColorValues = calculateQuizColorValues(bodyColorValues, randomColorValues);
+    const quizColor = `rgb(${quizColorValues.r}, ${quizColorValues.g}, ${quizColorValues.b})`;
+    return quizColor;
+  }
+
+  function getRGBValues(color) {
+    const rgbRegex = /rgba?\((\d+), (\d+), (\d+)(, \d+)?\)/;
+    const match = color.match(rgbRegex);
+    if (match) {
+      return {
+        r: parseInt(match[1]),
+        g: parseInt(match[2]),
+        b: parseInt(match[3])
+      };
+    } else {
+      return null;
+    }
+  }
+
+  function getRandomColorValues() {
+    return {
+      r: Math.floor(Math.random() * 256),
+      g: Math.floor(Math.random() * 256),
+      b: Math.floor(Math.random() * 256)
+    };
+  }
+
+  function calculateQuizColorValues(bodyColorValues, randomColorValues) {
+    return {
+      r: (bodyColorValues.r + randomColorValues.r) / 2,
+      g: (bodyColorValues.g + randomColorValues.g) / 2,
+      b: (bodyColorValues.b + randomColorValues.b) / 2
+    };
+  }
 </script>
-  
-  <script>
-      const quizContainer = document.querySelector('.quiz-container');
-      const bodyBgColor = window.getComputedStyle(document.body).getPropertyValue('background-color');
-      const quizBgColor = generateRandomColor(bodyBgColor);
-      quizContainer.style.backgroundColor = quizBgColor;
 
-      function generateRandomColor(bgColor) {
-        const bodyColorValues = getRGBValues(bgColor);
-        const randomColorValues = getRandomColorValues();
-        const quizColorValues = calculateQuizColorValues(bodyColorValues, randomColorValues);
-        const quizColor = `rgb(${quizColorValues.r}, ${quizColorValues.g}, ${quizColorValues.b})`;
-        return quizColor;
-      }
-
-      function getRGBValues(color) {
-        const rgbRegex = /rgba?\((\d+), (\d+), (\d+)(, \d+)?\)/;
-        const match = color.match(rgbRegex);
-        if (match) {
-          return {
-            r: parseInt(match[1]),
-            g: parseInt(match[2]),
-            b: parseInt(match[3])
-          };
-        } else {
-          return null;
-        }
-      }
-
-      function getRandomColorValues() {
-        return {
-          r: Math.floor(Math.random() * 256),
-          g: Math.floor(Math.random() * 256),
-          b: Math.floor(Math.random() * 256)
-        };
-      }
-
-      function calculateQuizColorValues(bodyColorValues, randomColorValues) {
-        return {
-          r: (bodyColorValues.r + randomColorValues.r) / 2,
-          g: (bodyColorValues.g + randomColorValues.g) / 2,
-          b: (bodyColorValues.b + randomColorValues.b) / 2
-        };
-      }
-    </script>
 </html>
