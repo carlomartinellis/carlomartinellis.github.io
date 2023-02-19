@@ -80,7 +80,7 @@
   </form>
   </div>
   <button id="submit-button">CALCOLA IL RISULTATO</button>
-  <div id="result">
+  <div id="result" style="font-size:30px;">
     <!-- result will be displayed here -->
   </div>
 </div>
@@ -171,7 +171,7 @@ const questions = [
     answers: [
       {
         text: "Eh",
-        weight: [10, 3, 4, 2, 5, 0, 3, 4, 0, 0, 0, 0]
+        weight: [7, 3, 4, 2, 5, 0, 3, 4, 0, 0, 0, 0]
       },
       {
         text: "Il contrario funziona uguale",
@@ -189,11 +189,11 @@ const questions = [
     answers: [
       {
         text: "Ye",
-        weight: [10, 3, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0]
+        weight: [5, 3, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0]
       },
       {
         text: "E fattela una risata!",
-        weight: [0, 3, 2, 5, 0, 0, 0, 3, 3, 2, 0, 4]
+        weight: [0, 3, 2, 3, 0, 0, 0, 3, 3, 2, 0, 4]
       },
       {
         text: "Ok ma non è rilevante",
@@ -207,7 +207,7 @@ const questions = [
     answers: [
       {
         text: "Decisamente",
-        weight: [10, 5, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]
+        weight: [8, 5, 4, 3, 5, 5, 5, 5, 0, 0, 0, 0]
       },
       {
         text: "Ma intendevi le droghe?",
@@ -225,11 +225,11 @@ const questions = [
     answers: [
       {
         text: "Anche in questo momento",
-        weight: [5, 0, 3, 4, 0, 0, 4, 3, 0, 0, 0, 0]
+        weight: [3, 0, 3, 4, 0, 0, 4, 3, 0, 0, 0, 0]
       },
       {
         text: "Solo perché ho poco tempo",
-        weight: [4, 5, 4, 4, 3, 3, 3, 4, 0, 0, 0, 0]
+        weight: [3, 5, 4, 4, 3, 3, 3, 4, 0, 0, 0, 0]
       },
       {
         text: "Non credo",
@@ -247,7 +247,7 @@ const questions = [
       },
       {
         text: "Non so",
-        weight: [5, 5, 0, 0, 5, 0, 3, 0, 0, 3, 0, 0]
+        weight: [4, 5, 0, 0, 5, 0, 3, 0, 0, 3, 0, 0]
       },
       {
         text: "Eh",
@@ -269,7 +269,7 @@ const questions = [
       },
       {
         text: "Simpatia portami via",
-        weight: [3, 2, 3, 3, 2, 0, 2, 3, 0, 2, 5, 0]
+        weight: [1, 2, 3, 3, 2, 0, 2, 3, 0, 2, 5, 0]
       }
     ]
   },
@@ -279,7 +279,7 @@ const questions = [
     answers: [
       {
         text: "Meglio che scoppiare",
-        weight: [5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0]
+        weight: [3, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0]
       },
       {
         text: "Meglio che sparare",
@@ -297,11 +297,11 @@ const questions = [
     answers: [
       {
         text: "Mi aiutano a stare connesso",
-        weight: [5, 5, 2, 5, 5, 2, 5, 2, 0, 3, 0, 0]
+        weight: [3, 5, 2, 5, 5, 2, 5, 2, 0, 3, 0, 0]
       },
       {
         text: "Sono il primo passo verso la mente alveare",
-        weight: [5, 5, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0]
+        weight: [3, 5, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0]
       },
       {
         text: "Non ho altra scelta",
@@ -315,7 +315,7 @@ const questions = [
     answers: [
       {
         text: "E di queste risposte",
-        weight: [5, 2, 3, 2, 3, 4, 3, 5, 0, 0, 0, 0]
+        weight: [2, 2, 3, 2, 3, 4, 3, 5, 0, 0, 0, 0]
       },
       {
         text: "Mannò",
@@ -341,7 +341,7 @@ const questions = [
       },
       {
         text: "Mi pare ovvio",
-        weight: [5, 5, 0, 5, 5, 5, 0, 5, 0, 0, 0, 0]
+        weight: [2, 5, 0, 5, 5, 5, 0, 5, 0, 0, 0, 0]
       }
     ]
   },
@@ -359,7 +359,7 @@ const questions = [
       },
       {
         text: "Io sì, tu non mi pare",
-        weight: [5, 3, 6, 5, 2, 3, 5, 5, 0, 0, 0, 0]
+        weight: [2, 3, 6, 5, 2, 3, 5, 5, 0, 0, 0, 0]
       }
     ]
   },
@@ -377,7 +377,7 @@ const questions = [
       },
       {
         text: "Purtroppo è vero",
-        weight: [5, 5, 0, 3, 5, 5, 0, 5, 0, 0, 0, 5]
+        weight: [2, 5, 0, 3, 5, 5, 0, 5, 0, 0, 0, 5]
       }
     ]
   },
@@ -395,7 +395,7 @@ const questions = [
       },
       {
         text: "Esatto",
-        weight: [4, 2, 2, 4, 0, 0, 2, 3, 0, 0, 0, 5]
+        weight: [2, 2, 2, 4, 0, 0, 2, 3, 0, 0, 0, 5]
       }
     ]
   },
@@ -405,7 +405,7 @@ const questions = [
     answers: [
       {
         text: "Da mezzo secolo",
-        weight: [5, 0, 5, 2, 0, 5, 2, 5, 0, 0, 0, 0]
+        weight: [1, 0, 5, 2, 0, 5, 2, 5, 0, 0, 0, 0]
       },
       {
         text: "Uhm",
@@ -431,7 +431,7 @@ const questions = [
       },
       {
         text: "Mah",
-        weight: [5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 5, 0]
+        weight: [1, 5, 5, 5, 5, 5, 5, 5, 0, 0, 5, 0]
       }
     ]
   },
@@ -491,7 +491,7 @@ const profiles = [
     name: "CARLO MARTINELLO", link: "/profiles/profile11.html"
   },
   {
-    name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "profile12.html"
+    name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "/profiles/profile12.html"
   }
 ];
 
