@@ -16,7 +16,7 @@
     <title>Oracolo Assurdo Perfetto</title>
     <style>
         body {
-            
+
             background-color: rgb(200, 255, 3);
             text-align: center;
             font-family: 'Noto Sans JP', sans-serif;
@@ -41,11 +41,32 @@
     color: rgb(226, 255, 6);
 }
 
-      
+#balloon {
+  position: fixed;
+  top: 50px;
+  width: fit-content;
+  height: 30%;
+}
+
+/* Hide the element when the screen width is less than 600px */
+@media only screen and (max-width: 600px) {
+  #balloon {
+    display: none;
+  }
+}
+
+
+
     </style>
   </head>
   <body>
-    
+
+<div id="balloon">
+<img src="balloon.gif">
+</div>
+
+
+
 <div id="quiz">
   <h1>Oracolo Perfetto Assurdo Wow</h1>
   <img src="https://media.tenor.com/kUEDWuWLzG0AAAAC/frog-trippy.gif" width="200"> <br>
@@ -54,7 +75,7 @@
   <div class="quiz-container">
 
   <form id="form">
-    
+
     <!-- quiz questions will be dynamically generated here -->
   </form>
   </div>
@@ -88,7 +109,7 @@ const questions = [
         text: "Mah",
         weight: [0, 0, 0, 0, 5, 4, 0, 4, 4, 3, 5, 0]
       }
-      
+
     ]
   },
   {
@@ -126,7 +147,7 @@ const questions = [
       }
     ]
   },
-  
+
   {
     text: "Il caso non esiste, il caos esiste",
     answers: [
@@ -180,7 +201,7 @@ const questions = [
       }
     ]
   },
-  
+
   {
     text: "Consumo più musica leggera che pesante",
     answers: [
@@ -432,45 +453,45 @@ const questions = [
       }
     ]
   },
-  
+
 ];
 
 const profiles = [
   {
-    name: "LARVA UMANALE" , link: "/profiles/profile1.html" 
+    name: "LARVA UMANALE" , link: "/profiles/profile1.html"
   },
   {
-    name: "NPC (Se non sai cosa vuol dire ancora di più", link: "/profiles/profile2.html" 
+    name: "NPC (Se non sai cosa vuol dire ancora di più", link: "/profiles/profile2.html"
   },
   {
-    name: "FURBO RODITORE CAMMORISTA", link: "/profiles/profile3.html" 
+    name: "FURBO RODITORE CAMMORISTA", link: "/profiles/profile3.html"
   },
   {
-    name: "VENDITORE DI BEVANDE GASSATE INTERIORI", link: "/profiles/profile4.html" 
+    name: "VENDITORE DI BEVANDE GASSATE INTERIORI", link: "/profiles/profile4.html"
   },
   {
-    name: "PASSANTE", link: "/profiles/profile5.html" 
+    name: "PASSANTE", link: "/profiles/profile5.html"
   },
   {
-    name: "PAX ANONIMO DI UN RISTORANTE ANONIMO", link: "/profiles/profile6.html" 
+    name: "PAX ANONIMO DI UN RISTORANTE ANONIMO", link: "/profiles/profile6.html"
   },
   {
-    name: "TRAFFICANTE DI SEMI DI ZUCCA", link: "/profiles/profile7.html" 
+    name: "TRAFFICANTE DI SEMI DI ZUCCA", link: "/profiles/profile7.html"
   },
   {
-    name: "OPERATORE DELLA PUBBLICA AMMINISTRAZIONE IN VACANZA", link: "/profiles/profile8.html" 
+    name: "OPERATORE DELLA PUBBLICA AMMINISTRAZIONE IN VACANZA", link: "/profiles/profile8.html"
   },
   {
-    name: "ANZIANO SAGGIO DENTRO E FUORI", link: "/profiles/profile9.html" 
+    name: "ANZIANO SAGGIO DENTRO E FUORI", link: "/profiles/profile9.html"
   },
   {
-    name: "PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI", link: "/profiles/profile10.html" 
+    name: "PSICONAUTA COMMENDATORE IN CONDOMINI ALIENI", link: "/profiles/profile10.html"
   },
   {
-    name: "CARLO MARTINELLO", link: "/profiles/profile11.html" 
+    name: "CARLO MARTINELLO", link: "/profiles/profile11.html"
   },
   {
-    name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "profile12.html" 
+    name: "CORAGGIOSO COMANDANTE DELL'ESERCITO IN RIVIERA", link: "profile12.html"
   }
 ];
 
@@ -498,7 +519,7 @@ for (const question of questions) {
     label.prepend(input);
     form.appendChild(label);
   }
-  
+
 }
 
 submitButton.addEventListener("click", event => {
@@ -594,5 +615,17 @@ function getBestProfile(profileScores) {
     };
   }
 </script>
+
+<script>
+const balloon = document.querySelector('.balloon');
+const offset = 50; // adjust this value to position the balloon at the desired height
+
+window.addEventListener('scroll', () => {
+   console.log('scroll event triggered!');
+  const scrollPosition = window.scrollY;
+  balloon.style.top = `${scrollPosition + offset}px`;
+});
+
+  </script>
 
 </html>
