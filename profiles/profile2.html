@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <style>
+      .color-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          
+}
+
+    h1 {
+      font-family: 'Lobster', cursive;
+      text-align: center;
+      margin-top: 40px;
+    }
+    h3 {
+      font-family: 'Lobster', cursive;
+      text-align: left;
+      margin-left: 30px;
+      color: blueviolet;
+      
+    }
+    body
+{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+
+}
+.center {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.fine {
+    font-family: 'Lobster', cursive;
+      text-align: left;
+      margin-left: 50px;
+      color: blueviolet;
+      font-size: 25px;
+}
+
+.basta {
+      font-family: 'Lobster', cursive;
+      text-align: center;
+      margin-left: 30px;
+      font-size: larger;
+      color:red;
+    }
+  </style>
+  <title>NPC</title>
+</head>
+<body>
+  <h1>NPC (Non playing character)</h1>
+  <img src="profile2.jpg" width="200" height="300" class="center"> <br>
+  
+Non sei esattamente tu a controllare il joystick della tua vita, ma oscure forze aldilà della tu comprensione. <br>
+Si tratta in effetti di esseri pandimensionali che si divertono a farti prendere un cornetto al bar quando invece
+tu vorresti bere cioccolata calda dalla fontana fumante della vita.<br>
+Non hai colpe e non hai pregi, semplicemente non "sei". <br>
+<h3>
+    Suggerimenti per il benessere:
+</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        
+          <li><a href="https://it.wikipedia.org/wiki/Vasca_di_deprivazione_sensoriale"target="_blank">Abbraccia l'assenza con una vasca di deprivazione sensoriale.</a></li>
+          <li><a href="https://movery.it/napoli/mercato-pignasecca"target="_blank">Passa otto ore a Napoli alla Pignasecca attaccando bottone a una persona diversa ogni otto minuti.</a></li>
+          <li><a href="https://store.steampowered.com/app/1122680/The_Artful_Escape/"target="_blank">The Artful Escape.</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <h3>
+       Album consigliato:
+       <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/5hXTuGzaOREp5WHYGQXXB1?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </h3>
+    <a href="profiles.html" class="fine"> Scopri gli altri profili! </a>
+  </div>
+  <a href="../index.html" class="basta">Basta con ste stronzate </a>
+
+  <script>
+  function changeBackgroundColor() {
+  // Generate a random RGB color
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  const color = `rgb(${red}, ${green}, ${blue})`;
+
+  // Set the background color with a smooth transition effect
+  document.body.style.transition = "background-color 1s ease-in-out";
+  document.body.style.backgroundColor = color;
+}
+
+// Call the function every 5 seconds
+setInterval(changeBackgroundColor, 5000);
+
+  </script>
+</body>
+  
+</html>
