@@ -49,7 +49,7 @@
             font-family: 'Noto Sans JP', sans-serif;
 
               }
-              
+
               #bouncing-image {
         position: absolute;
         height: 180px;
@@ -57,7 +57,7 @@
         x:0;
         y:0;
       }
-        
+
             /* Social links */
 
         .social-links {
@@ -67,30 +67,38 @@
             z-index: 1;
             font-size: 50px;
             color: red;
-          
+
         }
-       
+        #gif {
+          display: inline-block;
+          position: fixed;
+          left: 0;
+          bottom: 0;
+        }
+
+        }
+
     </style>
   </head>
   <body>
 
-    
+
     <div class="video-background">
         <video id="bg-video" poster="forse.jpg" loop autoplay muted playsinline>
                 <source src="bg.mp4" type="video/mp4">
                 Your browser does not support the video tag, go social. Non va il video e vabbé, lascia perdere non ti sei perso niente, anzi aspetta ti sei perso tutto, vai sui link che spero si vedano dei social, ciao.
               </video>
-              
+
               <script>
                 var video = document.getElementById("bg-video");
                 video.play();
               </script>
-              
+
   </div>
              <!-- COLORE DI SFONDO -->
    <div class="color-background"></div>
-  
-  
+
+
         <!-- JUMPING FACE -->
 
 <img id="bouncing-image" src="faccia/100.png"/>
@@ -148,21 +156,24 @@ img.addEventListener("click", function() {
 </script>
 
 
+//PLAYERVIDEO
+
+<img id="gif" src="marghesito.gif" alt="PLAY">
+
+
+<audio id="audio" src="marghesito.mp3"></audio>
 
 
 
 
 
 
-  
-  
-    
       <!-- H1 TESTO CON ANIMAZIONE-->
   <div class="text-overlay">
      <h1 class="text-3xl">Carlo Martinelli</h1>
   </div>
 
-    
+
                 <!-- ICONE DEI SOCIAL-->
   <div class="social-links">
     <a href="https://open.spotify.com/artist/1ri7MdXHjsOk00aD0Lrdps" class="fab fa-spotify social-link spotify"></a>
@@ -170,7 +181,7 @@ img.addEventListener("click", function() {
     <a href="https://www.instagram.com/marlocartinelli/" class="fab fa-instagram social-link instagram"></a>
     <a href="https://twitter.com/marlocartinelli" class="fab fa-twitter social-link twitter"></a>
 </div>
-  
+
     </div>
 </div>
 
@@ -198,17 +209,41 @@ img.addEventListener("click", function() {
   }
 </script>
 
+
+
+//PLAYER VIDEO MARGHE
+
 <script>
+var audio = document.getElementById("audio");
+var gif = document.getElementById("gif");
+var isPlaying = false;
+
+gif.addEventListener("click", function() {
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+  } else {
+    audio.play();
+    isPlaying = true;
+  }
+});
+
+
+</script>
+
+
+
+
   // Create an array of colors to cycle through
   const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#00ffff", "#ff00ff"];
   let currentColor = 0;
-  
+
   // Function to change the background color
   function changeColor() {
     document.querySelector(".color-background").style.backgroundColor = colors[currentColor];
     currentColor = (currentColor + 1) % colors.length;
   }
-  
+
   // Run the changeColor function every 1000 milliseconds (1 second)
   setInterval(changeColor, 1000);
 </script>
