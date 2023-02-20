@@ -55,8 +55,6 @@
         position: absolute;
         height: 180px;
         width: 180px;
-        z-index: 10000;
-                
         x:0;
         y:0;
       }
@@ -67,7 +65,7 @@
             position: fixed;
             bottom: 20px;
             right: 40px;
-             z-index: 10002;
+            z-index: 10002;
             font-size: 50px;
             color: red;
 
@@ -77,7 +75,7 @@
           position: fixed;
           left: 0;
           bottom: 0;
-          z-index: 10001;
+          z-index: 10000;
         }
 
         .rain-overlay {
@@ -99,7 +97,6 @@
   </head>
   <body>
 <div class="rain">
-//rain
 
 <div class="rain-overlay">
   <img src="rain.gif" alt="GIF Overlay">
@@ -180,7 +177,6 @@ img.addEventListener("click", function() {
 </script>
 
 
-//PLAYERVIDEO
 
 <img id="gif" src="marghesito.gif" alt="PLAY">
 
@@ -234,9 +230,6 @@ img.addEventListener("click", function() {
 </script>
 
 
-
-//PLAYER VIDEO MARGHE
-
 <script>
 var audio = document.getElementById("audio");
 var gif = document.getElementById("gif");
@@ -255,10 +248,6 @@ gif.addEventListener("click", function() {
 
 </script>
 
-
-
-
-  // Create an array of colors to cycle through
   <script>
   const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#00ffff", "#ff00ff"];
   let currentColor = 0;
