@@ -76,11 +76,31 @@
           bottom: 0;
         }
 
-        }
+        .rain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+
+.rain-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
     </style>
   </head>
   <body>
+<div class="rain">
+//rain
+
+<div class="rain-overlay">
+  <img src="rain.gif" alt="GIF Overlay">
+</div>
+
 
 
     <div class="video-background">
