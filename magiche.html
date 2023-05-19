@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Video Player</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    #background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    #video-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: calc(100vh * 9 / 16);
+      max-height: calc(100vw * 16 / 9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #video-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      border: 10px solid;
+      border-color: rgba(255, 255, 255, 0.5);
+      animation: frameAnimation 3s infinite;
+    }
+
+    @keyframes frameAnimation {
+      0% {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        border-color: rgba(255, 0, 0, 0.5);
+      }
+      100% {
+        border-color: rgba(0, 0, 255, 0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <img id="background" src="1Apv.gif" alt="Background GIF">
+
+  <div id="video-container">
+    <video id="video-player" preload="auto" loop>
+      <source src="1.mp4" type="video/mp4">
+    </video>
+    <div id="video-frame"></div>
+  </div>
+
+  <script>
+    var video = document.getElementById('video-player');
+    var frame = document.getElementById('video-frame');
+    var videoContainer = document.getElementById('video-container');
+
+    videoContainer.addEventListener('click', toggleVideo);
+
+    function toggleVideo() {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  </script>
+</body>
+</html>
