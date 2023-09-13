@@ -1,0 +1,97 @@
+/* Basic styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-image: url('1Apv.gif');
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-position: center;
+}
+nav {
+  background-color: white;
+}
+a {
+  color: black;
+}
+
+.hidden {
+  display: none;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+}
+
+nav ul li {
+  margin-right: 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+}
+
+.main-title {
+  font-size: 48px;
+  font-style: italic;
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Video container for responsive YouTube embed */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Bio section */
+.bio-content {
+  background-color: white;
+  padding: 20px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.social-link {
+  font-size: 24px;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.spotify { color: #1DB954; }
+.youtube { color: #FF0000; }
+.instagram { color: #C13584; }
+.twitter { color: #1DA1F2; }
+
+.social-link:hover {
+  opacity: 0.7;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+}
