@@ -4,183 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carlo Martinelli</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-  body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Helvetica Neue', sans-serif;
-}
+  <!-- Add your CSS file here -->
+  <link rel="stylesheet" href="promo.css">
+  <link rel="stylesheet" type="text/css" href="social.css">
 
-/* Background slideshow */
-.slideshow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  background-size: cover;
-  background-position: center;
-  animation: slideshow 33s infinite;
-}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
-/* Media queries for different screen widths */
-@media screen and (max-width: 480px) {
-  .slideshow {
-    background-size: auto 100%;
-    background-position: center top;
-  }
-}
-
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .slideshow {
-    background-size: cover;
-    background-position: center;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  .slideshow {
-    background-size: cover;
-    background-position: center;
-  }
-}
-
-@keyframes slideshow {
-  0% { background-image: url("1.jpg"); }
-  9% { background-image: url("1.jpg"); }
-  10% { background-image: url("2.jpg"); }
-  18% { background-image: url("2.jpg"); }
-  20% { background-image: url("3.jpg"); }
-  27% { background-image: url("3.jpg"); }
-  30% { background-image: url("4.jpg"); }
-  36% { background-image: url("4.jpg"); }
-  40% { background-image: url("5.jpg"); }
-  45% { background-image: url("5.jpg"); }
-  50% { background-image: url("6.jpg"); }
-  54% { background-image: url("6.jpg"); }
-  60% { background-image: url("7.jpg"); }
-  63% { background-image: url("7.jpg"); }
-  70% { background-image: url("8.jpg"); }
-  72% { background-image: url("8.jpg"); }
-  80% { background-image: url("9.jpg"); }
-  81% { background-image: url("9.jpg"); }
-  90% { background-image: url("10.jpg"); }
-  91% { background-image: url("10.jpg"); }
-  100% { background-image: url("11.jpg"); }
-}
-
-/* Menu */
-.menu {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-  position: fixed;
-  width: 100%;
-  z-index: 2;
-}
-
-.menu a {
-  text-decoration: none;
-  color: #000;
-}
-
-/* Slideshow container */
-.slideshow-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  top: 0;
-  left: 0;
-}
-
-/* Title */
-.title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  font-weight: 300;
-  color: #fff;
-  z-index: 1;
-}
-
-/* Sections */
-section {
-  position: relative;
-  width: 100%;
-  padding: 50px;
-}
-
-#bio {
-  background-color: #fff;
-  color: #000;
-}
-
-#ascolta {
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-.social-link {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-  </style>
 </head>
 <body>
-  <div class="slideshow-container">
-  <div class="slideshow"></div>
-  <div class="slideshow" style="animation-delay: 0s; background-image: url('1.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 3s; background-image: url('2.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 6s; background-image: url('3.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 9s; background-image: url('4.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 12s; background-image: url('5.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 15s; background-image: url('6.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 18s; background-image: url('7.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 21s; background-image: url('8.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 24s; background-image: url('9.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 27s; background-image: url('10.jpg');"></div>
-    <div class="slideshow" style="animation-delay: 30s; background-image: url('11.jpg');"></div>
-<h1 class="title">Carlo Martinelli</h1>
-</div>
-<div class="menu">
-  <a href="#bio">Bio</a>
-  <a href="#tech-rider" download="marlocartinelliRIDER.pdf">Tech Rider</a>
-  <a href="#ascolta">Ascolta un'anteprima</a>
-  <a href="mailto:marlocartinellis@gmail.com?subject=ciao caro marlo">Scrivimi</a>
+  <nav>
+    <ul>
+      <li><a href="#bio">Bio</a></li>
+      <li><a href="#preview">Ascolta un'anteprima (PRIVATA, non è uscito ancora niente eh)</a></li>
+      <li><a href="marlocartinelliTECHRIDER.pdf" download>Tech Rider</a></li>
+      <li><a href="mailto:marlocartinellis@gmail.com?subject=Ciao%20caro%20marlo">Scrivimi sono Carlo Martinelli o Marlo Cartinelli sono the MAN sono io, ciao. </a></li>
+    </ul>
+  </nav>
+  <h1 class="main-title">CARLO MARTINELLI</h1>
+
+<!-- YOUTUBE TRAILER -->
+  <div class="video-container">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/mlVXayEETDo?si=-MFrkGgoIJQlOGR8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
-
-
+<!-- BIO -->
 <section id="bio">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
-</section>
+  <div class="bio-content">
+    Carlo Martinelli, ex stella del tennis ritiratasi dopo la grande disfatta di Wimbledon 83' (Martinelli-McEnroe 2-6 2-6 0-6), musicista/cantante meglio noto per il suo lavoro con la band post-punk Luminal con la quale ha registrato quattro dischi, diviso il palco con i Placebo all'Arena di Verona, collaborato con gli Afterhours per il rifacimento di Elymania (“Hai paura del buio Reloaded”) girato mezza Italia e consumato una grande quantità di cibo nei backstage dell'altra mezza Italia. Dopo "Caratteri Mobili" (area51 records, 2015) l'Ep di esordio, sta preparando il primo album da solista.
 
-<section id="ascolta">
-  <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1684426134%3Fsecret_token%3Ds-S5FzF1E7VyA&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-  <div class="social-links">
-    <a href="https://open.spotify.com/artist/1ri7MdXHjsOk00aD0Lrdps" class="fab fa-spotify social-link spotify"></a>
-    <a href="https://www.youtube.com/@CarloMartinellivid" class="fab fa-youtube social-link youtube"></a>
-    <a href="https://www.instagram.com/marlocartinelli/" class="fab fa-instagram social-link instagram"></a>
-    <a href="https://twitter.com/marlocartinelli" class="fab fa-twitter social-link twitter"></a>
+  </div>
+<!-- soundcloud -->
+  <section id="preview">
+  <div class="soundcloud-container">
+    <iframe width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1684426134%3Fsecret_token%3Ds-S5FzF1E7VyA&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/carlomartinelli" title="Carlo Martinelli" target="_blank" style="color: #cccccc; text-decoration: none;">Carlo Martinelli</a> · <a href="https://soundcloud.com/carlomartinelli/sets/disperato-eroico-bong-1/s-S5FzF1E7VyA" title="sbaglia porco disperato eroico bong" target="_blank" style="color: #cccccc; text-decoration: none;">sbaglia porco disperato eroico bong
+    </a>
+    </div>
   </div>
 </section>
-  <script>
-    // JavaScript code for the webpage
-  </script>
+</section>
+<!-- Add the social icons div -->
+<div class="social-links">
+  <a href="https://open.spotify.com/artist/1ri7MdXHjsOk00aD0Lrdps" class="fab fa-spotify social-link spotify"></a>
+  <a href="https://www.youtube.com/@CarloMartinellivid" class="fab fa-youtube social-link youtube"></a>
+  <a href="https://www.instagram.com/marlocartinelli/" class="fab fa-instagram social-link instagram"></a>
+  <a href="https://www.nasa.gov" class="fab fa-twitter social-link twitter"></a>
+</div>
 </body>
 </html>
