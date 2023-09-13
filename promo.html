@@ -24,10 +24,27 @@
   <div class="video-container">
   <iframe width="560" height="315" src="https://www.youtube.com/embed/mlVXayEETDo?si=-MFrkGgoIJQlOGR8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-
+<div class="language-switch">
+  <span id="eng" style="cursor:pointer; color:#ffffff;">ENG</span> | <span id="french" style="cursor:pointer; color:#ffffff;">FRENCH </span>
+</div>
 <!-- BIO -->
 <section id="bio">
-  <div class="bio-content">
+  <div class="bio-content" id="bio-french" style="display:none;">
+    L'artiste autrefois connu sous le nom de Carlo Martinelli ou Marlo Cartinelli, jamais Barack Obama, présente en direct un aperçu de ses nouvelles chansons dans lesquelles il explore un nouvel équilibre entre la communication et l'extase mystique. Le concert se déroule en déconstruisant et reconstruisant continuellement l'idée d'un concert "pop" et du dialogue entre l'auteur et le public, dans une tentative d'extraire le présent/l'absent de l'espace-temps.
+  Toute la gamme des genres musicaux essaie d'être représentée avec un désintérêt formel. L'utilisation de boucliers physiques et/ou de détachement émotionnel est recommandée. La présence d'enfants est déconseillée, mais les enfants pourraient s'enfuir de toute façon et se perdre.
+  Vous vous souviendrez peut-être de ce gars pour son travail avec le groupe post-punk Luminal, avec lequel il a enregistré quatre albums, partagé la scène avec Placebo à l'Arena de Vérone, collaboré avec Afterhours pour le remake d'Elymania ("Hai paura del buio Reloaded"), tourné dans la moitié de l'Italie et consommé une grande quantité de nourriture dans les coulisses de l'autre moitié de l'Italie. Après "Caratteri Mobili" (Area51 records, 2015), il s'est engagé dans une série de collaborations confuses : avec le collectif artistique romain Misto Mame sous divers noms et de diverses manières, comme No Ego, explorant le concept de groupe et d'improvisation, en tant que guitariste, et divers autres rôles avec Vera Di Lecce, Corasan, et Jason La Mecca.
+  Cela fait environ une décennie qu'il prépare son premier album solo, qui devrait sortir réaliste en 2024, mais le réalisme est ce qu'il est, et tous les rois sont morts ou fous jusqu'à présent.
+</div>
+
+<div class="bio-content" id="bio-english" style="display:none;">
+  The artist formerly known as Carlo Martinelli or Marlo Cartinelli, never Barack Obama, presents live previews of new songs in which he explores a new balance between communication and mystical ecstasy. The concert unfolds by continuously deconstructing and reconstructing the idea of a "pop" concert and the dialogue between the author and the audience, attempting to extract the present/absent from space and time.
+  The entire range of musical genres tries to be represented with formal disinterest. The use of physical shields and/or emotional detachment is recommended. Children's attendance is discouraged, but children might run away in any case and get lost.
+  You might remember this guy for his work with the post-punk band Luminal, with which he recorded four albums, shared the stage with Placebo at the Arena di Verona, collaborated with Afterhours on the remake of Elymania ("Hai paura del buio Reloaded"), toured half of Italy, and consumed a large amount of food in backstage areas all over the other half of Italy. After "Caratteri Mobili" (Area51 records, 2015), he engaged in a series of confusing collaborations: with the Roman artistic collective Misto Mame under various names and in various ways, such as No Ego, exploring the concept of a band and improvisation, as a guitarist, and various other roles with Vera Di Lecce, Corasan, and Jason La Mecca.
+  It's been about a decade now that he has been preparing his debut solo album, which should realistically be released in 2024, but realism is what it is, and all the kings are dead or mad.
+</div>
+
+
+<div class="bio-content" id="bio-italian">
     L’artista precedentemente conosciuto come Carlo Martinelli o Marlo Cartinelli e mai Barack Obama, presenta dal vivo un’anteprima dei nuovi brani nei quali ricerca una nuova forma di equilibrio tra comunicazione ed estasi mistica. Il concerto si svolge destrutturando e ricostruendo continuamente l’idea di concerto “pop” e di dialogo tra autore e pubblico in un tentativo di estrarre dallo spazio tempo i presenti/assenti.
   L’intera gamma di genere musicale prova ad essere rappresentata con disinteresse formale. <br>
   Può essere consigliato l’uso di scudi fisici e/o distacco emotivo. <br>
@@ -57,5 +74,31 @@
   <a href="https://www.instagram.com/marlocartinelli/" class="fab fa-instagram social-link instagram"></a>
   <a href="https://www.nasa.gov" class="fab fa-twitter social-link twitter"></a>
 </div>
+<script>
+function toggleBio(language) {
+  const bioItalian = document.getElementById("bio-italian");
+  const bioEnglish = document.getElementById("bio-english");
+  const bioFrench = document.getElementById("bio-french");
+
+  if (language === "eng") {
+    bioItalian.style.display = "none";
+    bioEnglish.style.display = "block";
+    bioFrench.style.display = "none";
+  } else if (language === "french") {
+    bioItalian.style.display = "none";
+    bioEnglish.style.display = "none";
+    bioFrench.style.display = "block";
+  }
+}
+
+  document.getElementById("eng").addEventListener("click", function () {
+    toggleBio("eng");
+  });
+
+  document.getElementById("french").addEventListener("click", function () {
+    toggleBio("french");
+  });
+</script>
 </body>
+
 </html>
