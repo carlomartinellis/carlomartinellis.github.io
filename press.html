@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlo Martinelli - Niente Mai Press Kit</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            cursor: none;
+            position: relative;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000;
+        }
+
+        .background-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #custom-cursor::before,
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            background: white;
+        }
+
+        #custom-cursor::before {
+            width: 20px;
+            height: 2px;
+            top: 9px;
+            left: 0;
+        }
+
+        #custom-cursor::after {
+            width: 2px;
+            height: 20px;
+            left: 9px;
+            top: 0;
+        }
+
+        nav {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .nav-link {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-link:hover {
+            font-style: italic;
+        }
+
+        #content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .listen-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .listen-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .glitch {
+            animation: glitch 1s linear infinite;
+        }
+
+        @keyframes glitch {
+            2%, 64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+            4%, 60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img src="tango.gif" alt="Background animation">
+    </div>
+
+    <div id="custom-cursor"></div>
+
+    <nav>
+        <a href="#" class="nav-link" data-section="bio">BIO</a>
+        <a href="#" class="nav-link" data-section="album">ALBUM</a>
+        <a href="https://www.instagram.com/marlocartinelli/" class="nav-link" target="_blank">SOCIAL</a>
+        <a href="photoPress.zip" class="nav-link" download>PHOTO</a>
+        <a href="mailto:noyoto@gmail.com" class="nav-link">CONTACT</a>
+    </nav>
+
+    <main id="content"></main>
+
+    <footer>
+        Carlo Martinelli suona tutte le cose in malo modo e quando ti guarda ti guarda storto.
+    </footer>
+
+    <script>
+        // Custom cursor
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+
+        // Content handling
+        const content = document.getElementById('content');
+        const bioText = `Carlo Martinelli si scontra con la scena musicale come voce e basso/chitarra dal 2007 al 2015 nella band post-punk Luminal con i quali registra quattro album tra cui il seminale 'Amatoriale Italia'.
+         Nel 2013 miglior band dell'anno per il Mei, apre ai Placebo all'Arena di Verona su imbeccata di Teho Teardo, partecipa due volte al Primo Maggio di Taranto, collabora con gli Afterhours al rifacimento di Elymania per 'Hai paura del buio: Reloaded', un album con Mark Lanegan, Edoardo Bennato, Eugenio Finardi tra i tanti.
+Dopo lo scioglimento della band varie collaborazioni:
+Con il collettivo weird Misto Mame in vari progetti e con vari nomi.
+Con Corasan, Jason La Mecca e Vera Di Lecce in studio e live.
+Pubblica due EP come Carlo Martinelli: 'Miracoli e maledizioni', una presa diretta di chitarra e voce, e 'Caratteri mobili' (Area51 records) tra cantautorato e improvvisazione con band.
+'Niente mai' è il primo album da solista, nel 2025.`;
+
+        const albumText = `<a href="https://bit.ly/nientemainientemai" class="listen-link" target="_blank">ASCOLTA</a> - Un mosaico di frammenti sonori e lirici che si muovono tra surrealismo e concretezza.
+'Niente mai' esplora il confine tra ironia e malinconia, con testi che rievocano immagini quotidiane e oniriche, attraversando alienazione urbana e connessioni impossibili.
+Ogni traccia è un'isola, ma l'insieme crea un racconto frammentato, sospeso tra realismo brutale e immaginario astratto.
+Non c'è pretesa di risposte, solo una cronaca sincera del disordine.
+
+Mix Massimiliano Alfì, mastering Marco Sebasiano Milanesio.
+Registrato tra il 2020 e il 2022 esce per Wires Records nel 2025.`;
+
+        // Glitch effect on hover
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.classList.add('glitch');
+                if (Math.random() < 0.3) {
+                    link.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+                }
+            });
+
+            link.addEventListener('mouseleave', () => {
+                link.classList.remove('glitch');
+                link.style.transform = 'none';
+            });
+        });
+
+        // Section handling with GSAP animation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.hasAttribute('data-section')) {  // Only for bio and album sections
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = e.target.dataset.section;
+
+                    gsap.to(content, {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.3,
+                        onComplete: () => {
+                            if (section === 'bio') {
+                                content.innerHTML = bioText;
+                            } else if (section === 'album') {
+                                content.innerHTML = albumText;
+                            }
+
+                            gsap.to(content, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.3
+                            });
+                        }
+                    });
+                });
+            }
+        });
+
+        // Random text distortion
+        setInterval(() => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (Math.random() < 0.1) {
+                    link.style.letterSpacing = `${Math.random() * 5}px`;
+                    setTimeout(() => {
+                        link.style.letterSpacing = 'normal';
+                    }, 200);
+                }
+            });
+        }, 2000);
+    </script>
+</body>
+</html>
