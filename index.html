@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carll Martnell</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-pic-container">
+            <img src="avatar.jpg" alt="La tua foto profilo" class="profile-pic" id="profileImage">
+            <div class="profile-pic-border-glitch"></div> 
+        </div>
+
+        <p class="bio-text">
+            ciao sono 9438 anni che non faccio veramente musica e non faccio veramente
+            altro <br> faccio fatica a stare dritto ma per fortuna poche indigestioni
+        </p>
+
+        <div class="links-container">
+            <a href="https://open.spotify.com/intl-it/artist/1ri7MdXHjsOk00aD0Lrdps?si=nVUKPcBERCuppfLQ5LlLpQ" target="_blank" rel="noopener noreferrer" class="link-button spotify">
+                LINK SPOTIFY
+            </a>
+            <a href="https://www.youtube.com/@CarloMartinellivid" target="_blank" rel="noopener noreferrer" class="link-button youtube">
+                LINK YOUTUBE
+            </a>
+        </div>
+    </div>
+
+    <canvas id="glitchCanvas"></canvas>
+    <audio id="glitchAudio" loop>
+        <source src="eheh.mp3" type="audio/mpeg">
+        Il tuo browser non supporta l'elemento audio.
+    </audio>
+
+    <script src="script.js"></script> 
+</body>
+</html>
