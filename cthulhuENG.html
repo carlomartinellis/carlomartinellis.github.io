@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlo Martinelli - Sbaglia Porco Press Kit</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <style>
+        /* Base and Layout */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            cursor: none;
+            position: relative;
+            color: #f5f5f5;
+            overflow-x: hidden; /* Cruciale: impedisce lo scroll orizzontale */
+            background: #000;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000;
+        }
+
+        .background-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Custom Cursor (Desktop Only) */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        #custom-cursor::before,
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            background: white;
+        }
+
+        #custom-cursor::before {
+            width: 20px;
+            height: 2px;
+            top: 9px;
+            left: 0;
+        }
+
+        #custom-cursor::after {
+            width: 2px;
+            height: 20px;
+            left: 9px;
+            top: 0;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-link {
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            padding: 0.2rem 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            font-style: italic;
+        }
+        
+        /* Album Title and Description (Tagline) */
+        #album-tagline {
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem auto 2rem auto;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            box-sizing: border-box; /* Assicura che padding non causi overflow */
+        }
+
+        #album-tagline h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin: 0.2rem 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        #album-tagline p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Main Content Wrapper for layout control */
+        #main-content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+            overflow: hidden; 
+        }
+
+        /* SoundCloud Player (SMALL & LEFT) */
+        #soundcloud-player-container {
+            width: 320px;
+            float: left;
+            margin: 0 2rem 2rem 0;
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            transition: opacity 0.3s ease, width 0.3s ease;
+            box-sizing: border-box; /* Fondamentale per il contenimento */
+        }
+
+        #soundcloud-player-container div {
+            font-size: 0.8rem !important;
+            color: #cccccc !important;
+            text-shadow: none !important;
+            padding-top: 5px;
+        }
+        
+        /* Dynamic Content Area */
+        #content {
+            opacity: 0;
+            transform: translateY(20px);
+            line-height: 1.6;
+            font-size: 1.1rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            float: none;
+            width: 100%;
+            margin: 0;
+            box-sizing: border-box; /* Garantisce che il padding sia incluso nella width */
+        }
+        
+        /* Class for "full-screen" bio mode (when active) */
+        .content-bio-active {
+            width: 100%; 
+            margin: 0 0 2rem 0;
+        }
+
+        /* Glitch Effect */
+        .glitch-text {
+            animation: glitch 1s linear infinite;
+        }
+
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(5deg); }
+        }
+
+        .listen-link {
+            color: #ff5500;
+            text-decoration: none;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .listen-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-style: italic;
+            font-size: 1rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Media Queries for Mobile/Responsiveness */
+        @media (max-width: 768px) {
+            
+            /* Rimuove il padding dal wrapper principale per massimizzare lo spazio */
+            #main-content-wrapper {
+                padding: 0 0.5rem; 
+            }
+
+            /* Tagline size adjustment */
+            #album-tagline {
+                margin: 0.5rem auto 1rem auto;
+                padding: 1rem 0.5rem; /* Riduciamo il padding laterale per non overflow */
+            }
+
+            /* Player becomes full width and centered */
+            #soundcloud-player-container {
+                width: calc(100% - 20px); /* 100% meno il padding di 10px per lato */
+                float: none;
+                margin: 1rem auto;
+            }
+            
+            /* Content (Bio) on mobile: usa width 100% del wrapper e aggiusta padding */
+            #content {
+                width: 100%;
+                margin: 0 auto;
+                padding: 1rem; /* Padding ridotto per schermi piccoli */
+                font-size: 1rem;
+            }
+            
+            .content-bio-active {
+                /* Nessuna modifica necessaria, eredita 100% e gestisce il margine inferiore */
+                margin: 0 auto 2rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img src="tango.gif" alt="Background animation">
+    </div>
+
+    <div id="custom-cursor"></div>
+
+    <nav>
+        <a href="#" class="nav-link" data-section="bio">BIO</a>
+        <a href="https://www.instagram.com/marlocartinelli/" class="nav-link" target="_blank">SOCIAL</a>
+        <a href="mailto:noyoto@gmail.com" class="nav-link">CONTACT</a>
+    </nav>
+
+    <div id="album-tagline" class="tilt-effect">
+        <h1 class="glitch-text">SBAGLIA PORCO</h1>
+        <p>This link is private and for friends, or for a gig, in that case please book me, i'm nice, i can dance. Sbaglia Porco out in March 2026</p>
+    </div>
+    
+    <div id="main-content-wrapper">
+        <div id="soundcloud-player-container">
+            <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%3Aplaylists%3A1869649208%3Fsecret_token%3Ds-HXd5Cyf2u0i&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+            <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/carlomartinelli" title="Carlo Martinelli" target="_blank" style="color: #cccccc; text-decoration: none;">Carlo Martinelli</a> · <a href="https://soundcloud.com/carlomartinelli/sets/niente-mai/s-HXd5Cyf2u0i" title="SBAGLIA PORCO" target="_blank" style="color: #cccccc; text-decoration: none;">SBAGLIA PORCO</a></div>
+        </div>
+        
+        <main id="content"></main>
+        
+        <div style="clear: both;"></div>
+    </div>
+
+    <footer>
+        Carlo Martinelli is spelled Arlo Mirnatelli but reads as Kyrl Myrntl or EHM, it's not true that i can dance but please still be friends with me, or book me for a concert, hi, it's nice from you to read this text, this text is everything, this text should never end.
+    </footer>
+
+    <script>
+        // Custom cursor (desktop only)
+        const cursor = document.getElementById('custom-cursor');
+        if (!('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+            cursor.style.display = 'block';
+        }
+
+        // Content handling (English)
+        const content = document.getElementById('content');
+        const playerContainer = document.getElementById('soundcloud-player-container');
+        const bioText = `Carlo Martinelli clashed with the music scene as vocalist and bass/guitar player from 2007 to 2015 in the post-punk band **Luminal**, with whom he recorded four albums, including the seminal **'Amatoriale Italia'**.
+         In 2013, they were named 'Best Band of the Year' by Mei, opened for Placebo at the Arena di Verona following a suggestion from Teho Teardo, participated twice in the Primo Maggio concert in Taranto, and collaborated with **Afterhours** on the remake of 'Elymania' for 'Hai paura del buio: Reloaded', an album featuring Mark Lanegan, Damo Suzuki, Joan As a Police Woman, among others.
+After the band's breakup, he pursued various collaborations:
+With the weird collective **Misto Mame** in various projects and under different names.
+With Corasan, Jason La Mecca, and Vera Di Lecce in studio and live.
+He released two EPs as Carlo Martinelli: **'Miracoli e maledizioni'** (Miracles and Curses), a live take of guitar and voice, and **'Caratteri mobili'** (Movable Type) (Area51 records), blending singer-songwriter style with band improvisation.
+**'SBAGLIA PORCO'** is his first solo album, due for release in March 2026.`;
+
+        // Function to reset the layout to the default (player visible)
+        function resetLayout() {
+            gsap.to(playerContainer, { opacity: 1, height: 320, duration: 0.3, display: 'block' });
+            content.classList.remove('content-bio-active');
+            // Hide content on reset
+            gsap.to(content, { opacity: 0, y: 20, duration: 0.3 });
+            content.innerHTML = ''; // Clear content
+        }
+        
+        // --- Glitch Effect and Tilt ---
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.classList.add('glitch-text');
+                if (Math.random() < 0.3) {
+                    link.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+                }
+            });
+
+            link.addEventListener('mouseleave', () => {
+                link.classList.remove('glitch-text');
+                link.style.transform = 'none';
+            });
+
+            // Handle non-section links to reset the view
+            if (!link.hasAttribute('data-section')) {
+                 link.addEventListener('click', (e) => {
+                    if (link.getAttribute('href') === '#') {
+                        e.preventDefault();
+                    }
+                    resetLayout();
+                });
+            }
+        });
+
+        // GSAP for tilt effect on tagline (desktop only)
+        const tagline = document.getElementById('album-tagline');
+        const tiltIntensity = 5;
+        
+        if (!('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = tagline.getBoundingClientRect();
+                const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                const offsetX = (e.clientX - center.x) / (rect.width / 2);
+                const offsetY = (e.clientY - center.y) / (rect.height / 2);
+
+                gsap.to(tagline, {
+                    rotationX: -offsetY * tiltIntensity, 
+                    rotationY: offsetX * tiltIntensity,
+                    ease: "power1.out",
+                    duration: 0.5
+                });
+            });
+
+            document.addEventListener('mouseleave', () => {
+                gsap.to(tagline, { rotationX: 0, rotationY: 0, ease: "power1.out", duration: 0.8 });
+            });
+        }
+        
+        // --- Section Handling ---
+        document.querySelectorAll('.nav-link[data-section="bio"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                gsap.to(content, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.3,
+                    onComplete: () => {
+                        // 4. Hide player and set bio "full screen"
+                        gsap.to(playerContainer, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
+                        
+                        // Apply class for "full screen" (top-left aligned) look
+                        content.classList.add('content-bio-active');
+                        content.innerHTML = bioText;
+
+                        gsap.to(content, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.3
+                        });
+                    }
+                });
+            });
+        });
+
+        // Random text distortion (Glitch enhancement)
+        setInterval(() => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (Math.random() < 0.1) {
+                    link.style.letterSpacing = `${Math.random() * 5}px`;
+                    setTimeout(() => {
+                        link.style.letterSpacing = 'normal';
+                    }, 200);
+                }
+            });
+        }, 2000);
+        
+        // Initial setup: clear the content area
+        content.innerHTML = ''; 
+    </script>
+</body>
+</html>
