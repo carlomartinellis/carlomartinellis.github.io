@@ -11,45 +11,47 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
 
-    // --- 2. LOGICA AUDIO E VISIVA AL CLICK/TOUCH ---
+    // --- 2. LOGICA AUDIO E VISIVA AL CLICK/TOUCH (CON CONTROLLO NULL) ---
+    // Questo blocco viene eseguito SOLO se l'immagine profilo (e di conseguenza l'audio) esiste.
+    if (profileImage) { // <--- NUOVO CONTROLLO AGGIUNTO QUI
+        // Funzione per avviare l'audio
+        function playAudio(e) {
+            // Impedisce il comportamento di default come lo scroll (soprattutto su touch)
+            if (e.type === 'touchstart' || e.type === 'touchmove') {
+                e.preventDefault();
+            }
 
-    // Funzione per avviare l'audio
-    function playAudio(e) {
-        // Impedisce il comportamento di default come lo scroll (soprattutto su touch)
-        if (e.type === 'touchstart' || e.type === 'touchmove') {
-            e.preventDefault();
+            // Riporta l'audio all'inizio per un effetto "loop breve"
+            glitchAudio.currentTime = 0; 
+            // Play() deve essere gestito con catch() a causa delle restrizioni browser
+            glitchAudio.play().catch(error => {
+                console.warn("Impossibile avviare la riproduzione audio (richiede interazione utente).", error);
+            });
+            
+            // Feedback visivo: l'immagine si rimpicciolisce leggermente
+            profileImage.style.transform = 'scale(0.95)'; 
         }
 
-        // Riporta l'audio all'inizio per un effetto "loop breve"
-        glitchAudio.currentTime = 0; 
-        // Play() deve essere gestito con catch() a causa delle restrizioni browser
-        glitchAudio.play().catch(error => {
-            console.warn("Impossibile avviare la riproduzione audio (richiede interazione utente).", error);
-            // In un ambiente live, la prima interazione dell'utente sbloccherà questo.
-        });
+        // Funzione per stoppare l'audio
+        function stopAudio() {
+            glitchAudio.pause();
+            // Feedback visivo: l'immagine ritorna normale
+            profileImage.style.transform = 'scale(1)'; 
+        }
+
+        // Event Listeners per l'immagine del profilo
         
-        // Feedback visivo: l'immagine si rimpicciolisce leggermente
-        profileImage.style.transform = 'scale(0.95)'; 
+        // MOBILE (touchstart/touchend)
+        profileImage.addEventListener('touchstart', playAudio);
+        profileImage.addEventListener('touchend', stopAudio);
+        profileImage.addEventListener('touchcancel', stopAudio); 
+
+        // DESKTOP (mousedown/mouseup)
+        profileImage.addEventListener('mousedown', playAudio);
+        profileImage.addEventListener('mouseup', stopAudio);
+        profileImage.addEventListener('mouseleave', stopAudio); // Se si tiene premuto e si esce
     }
-
-    // Funzione per stoppare l'audio
-    function stopAudio() {
-        glitchAudio.pause();
-        // Feedback visivo: l'immagine ritorna normale
-        profileImage.style.transform = 'scale(1)'; 
-    }
-
-    // Event Listeners per l'immagine del profilo
-    
-    // MOBILE (touchstart/touchend)
-    profileImage.addEventListener('touchstart', playAudio);
-    profileImage.addEventListener('touchend', stopAudio);
-    profileImage.addEventListener('touchcancel', stopAudio); 
-
-    // DESKTOP (mousedown/mouseup)
-    profileImage.addEventListener('mousedown', playAudio);
-    profileImage.addEventListener('mouseup', stopAudio);
-    profileImage.addEventListener('mouseleave', stopAudio); // Se si tiene premuto e si esce
+    // --- FINE BLOCCO CONTROLLO NULL ---
 
     // --- 3. LOGICA ANIMAZIONE GLITCH FIELD ---
     

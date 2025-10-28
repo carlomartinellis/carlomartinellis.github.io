@@ -36,6 +36,46 @@ body {
     z-index: 10; 
 }
 
+/* --- NUOVI STILI PER LA PAGINA BIO --- */
+
+.page-title {
+    color: var(--acid-accent);
+    font-size: 2.5em;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+    text-shadow: 0 0 5px var(--acid-accent);
+}
+
+.large-text {
+    font-size: 1.2em; /* Testo leggermente più grande per la bio */
+    max-width: 450px; /* Consente al testo di occupare più spazio su schermi più grandi */
+}
+
+.bio-link {
+    color: var(--acid-accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--acid-accent);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.bio-link:hover,
+.bio-link:focus {
+    color: var(--text-color);
+    background-color: var(--acid-accent);
+    border-bottom: 1px solid transparent;
+}
+
+.highlight {
+    color: var(--text-color);
+    background-color: var(--idle-glitch-color); /* Lo sfondo scuro crea un effetto "glitch" */
+    padding: 2px 4px;
+    margin: 0 -2px;
+    font-weight: bold;
+}
+
+/* --- FINE NUOVI STILI BIO --- */
+
 /* Immagine Profilo */
 .profile-pic-container {
     position: relative;
@@ -180,6 +220,10 @@ body {
 
     .bio-text {
         font-size: 1.1em;
+    }
+
+    .large-text {
+        font-size: 1.4em; /* Ancora più grande su desktop */
     }
 
     .link-button {
