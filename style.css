@@ -90,6 +90,8 @@ body {
     /* Aggiunto transizione per il feedback visivo al click/touch in JS */
     transition: transform 0.1s ease-out; 
     cursor: pointer; /* Indica che è cliccabile */
+    /* FIX MOBILE: Impedisce i comportamenti predefiniti touch (es. menu contestuale/salvataggio) */
+    touch-action: manipulation; 
 }
 
 .profile-pic {
