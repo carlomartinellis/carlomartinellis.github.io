@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suonatore d'Autobus</title>
+    <link rel="icon" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='black' viewBox='0 0 16 16'%3e%3cpath d='M14 4H2C1.448 4 1 4.448 1 5v6c0 .552.448 1 1 1h1v1.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V12h6v1.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V12h1c.552 0 1-.448 1-1V5c0-.552-.448-1-1-1zM3.5 11a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm9 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM13 8H3V6h10v2z'/%3e%3c/svg%3e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* --- STILI GENERALI --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', monospace; background: #000; color: #fff; overflow: hidden; image-rendering: pixelated; }
+        .retro-background, .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .retro-background { background: url('./images/intro1.gif') center/cover no-repeat; }
+        .scanlines { background: repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px); pointer-events: none; z-index: 2; }
+        .content { position: relative; z-index: 10; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+        
+        .title { font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; opacity: 0; animation: fadeIn 0.7s ease-in-out 0.3s forwards; text-shadow: 0 0 10px rgba(255,255,255,0.5); background: rgba(0,0,0,0.7); border: 6px solid #fff; box-shadow: 0 0 0 2px rgba(0,0,0,0.7), 0 0 0 8px #fff; padding: 20px 30px; text-align: center; white-space: nowrap; }
+        #titleText { display: inline-block; animation: textPulse 3s ease-in-out 1.5s infinite; }
+
+        .language-selector { font-size: 1rem; margin-bottom: 2rem; background: rgba(0,0,0,0.7); border: 2px solid #fff; padding: 0.5rem 1rem; opacity: 0; animation: fadeInRetro 0.8s ease-out 0.8s forwards; }
+        .lang-option { cursor: pointer; text-transform: uppercase; padding: 0 0.5rem; }
+        .lang-option:hover { text-shadow: 0 0 10px #fff; }
+        .lang-option.active { color: #000; background: #fff; }
+        .instruction { font-size: 1.1rem; margin-bottom: 1.5rem; background: rgba(0,0,0,0.7); border: 2px solid #fff; padding: 1rem 2rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0; max-width: 600px; text-align: center; display: none; position: relative; z-index: 30; }
+        #instruction1.visible { display: block; opacity: 0; animation: fadeInRetro 0.8s ease-out forwards; }
+        
+        .start-button { 
+            font-size: 1.5rem; font-weight: bold; color: #000; background: #fff; 
+            border: 4px solid #fff; padding: 1rem 3rem; cursor: pointer; 
+            display: none; margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: buttonPulse 2s infinite ease-in-out;
+            min-width: 150px; 
+            text-align: center;
+        }
+        .start-button:hover {
+            background: #000;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+        .start-button.visible { display: inline-block; animation: fadeInRetro 0.8s ease-out forwards, buttonPulse 2s 0.8s infinite ease-in-out; }
+        
+        .loading-container { margin-top: 2rem; width: 80%; max-width: 500px; opacity: 0; animation: fadeInRetro 0.8s ease-out 1.2s forwards; transition: opacity 0.5s ease-out; }
+        .loading-container.hidden { opacity: 0; visibility: hidden; height: 0; margin: 0; transition: opacity 0.5s ease-out, height 0s 0.5s, visibility 0s 0.5s, margin 0s 0.5s; }
+        .loading-bar { width: 100%; height: 30px; background-color: rgba(0,0,0,0.7); border: 3px solid #fff; position: relative; overflow: hidden; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        .loading-progress { height: 100%; width: 0%; background-color: #fff; transition: width 0.1s linear; }
+        .loading-text { margin-top: 10px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(0,0,0,0.7); padding: 5px 10px; border: 2px solid #fff; }
+        
+        /* --- NUOVI STILI PER TUTORIAL SBLOCCO AUDIO --- */
+        #audioUnlocker {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 500;
+            display: none; /* Inizialmente nascosto */
+            align-items: center; justify-content: center;
+            cursor: pointer;
+            padding: 1rem;
+        }
+
+        #audioUnlockerBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border: 2px solid #fff;
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        #unlockTutorialContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        #unlockInstructionText {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            min-height: 50px; /* Per evitare sbalzi di layout */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease-in-out;
+        }
+        
+        #unlockInstructionText.prompt-pulse {
+            animation: textPulseWhite 2s ease-in-out infinite;
+        }
+
+        #unlockInstructionImageContainer {
+            width: 100px;
+            height: 150px;
+            transition: opacity 0.4s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0; /* Inizia nascosto */
+        }
+        
+        #unlockInstructionImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+        }
+        
+        @media (min-width: 768px) {
+            #unlockTutorialContainer {
+                flex-direction: row;
+                gap: 3rem;
+                align-items: center;
+            }
+            #unlockInstructionText {
+                font-size: 1.8rem;
+            }
+            #unlockInstructionImageContainer {
+                width: 120px;
+                height: 180px;
+            }
+        }
+
+
+        /* --- STILI SEQUENZA INTRO --- */
+        .intro-sequence-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.8s ease-in-out; cursor: pointer; }
+        .intro-sequence-container.visible { opacity: 1; pointer-events: all; }
+        
+        .video-wrapper { position: relative; width: 100%; height: 100%; display: grid; grid-template-rows: 90vh 10vh; background: #000; overflow: hidden; }
+        #introVideo { grid-row: 1 / 2; width: 100%; height: 100%; object-fit: contain; transform: scale(1.05); z-index: 1; }
+   
+        .caption { position: absolute !important; bottom: 5vh; width: calc(100% - 1rem); max-width: 90%; font-family: 'UnifrakturCook', cursive; font-size: 1.6rem; line-height: 1.3; padding: 0.8rem; z-index: 20; background: rgba(0, 0, 0, 0.8); border-radius: 4px; margin: 0.5rem; animation: none !important; transition: none !important; }
+        .caption.caption-default { left: 50% !important; transform: translateX(-50%) !important; text-align: center !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+        .caption.visible { animation: caption-appear 1s ease-out forwards; }
+        .caption em { font-style: italic; }
+
+        /* --- STILI PER CREDITS --- */
+        .caption.credit-text { grid-row: 1 / 2; position: absolute; display: block !important; font-family: 'EB Garamond', serif; font-size: 1.4rem; font-style: normal; text-shadow: 2px 2px 8px rgba(0,0,0,0.9); padding: 2rem; line-height: 1.4; width: auto; height: auto; max-width: 80%; z-index: 10; background: none; opacity: 0; transition: opacity 0.8s ease-in-out; }
+        .caption.credit-pos-right { top: auto !important; left: auto !important; bottom: 5vh; right: 5vw; transform: none !important; text-align: right !important; justify-content: flex-end !important; align-items: flex-end !important; width: auto; max-width: 90%; }
+        .caption.credit-text.visible { opacity: 1; }
+
+        /* --- ANIMAZIONI --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInRetro { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes textPulse { 0%, 70% { opacity: 1; text-shadow: 1px 1px 2px #000; } 85%, 100% { opacity: 0; text-shadow: none; } }
+        @keyframes textPulseWhite { 0%, 70% { opacity: 1; } 85%, 100% { opacity: 0; } }
+        @keyframes caption-appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes buttonPulse { 0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); } 50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); } 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); } }
+        
+      
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            #audioUnlockerBox { padding: 1.5rem; }
+            .video-wrapper { grid-template-rows: 70vh 30vh; overflow: visible; }
+            #introVideo { object-fit: fill; transform: none; }
+            .title { font-size: 1.5rem; }
+            .caption { font-size: 1.6rem; line-height: 1.3; padding: 0.8rem; z-index: 20; background: rgba(0,0,0,0.8); border-radius: 4px; margin: 0.5rem; position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 90%; grid-row: unset; }
+            .caption.credit-text { font-size: 1.0rem; padding: 1rem; max-width: 85%; background: none; border-radius: 4px; margin: 0; position: absolute; width: unset; grid-row: 1 / 2; display: block !important; }
+            .caption.credit-pos-right { bottom: 3vh; right: 3vw; text-align: right !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="retro-background"></div>
+    <div class="scanlines"></div>
+
+    <audio id="introMusic" preload="auto">
+        <source src="./music/5premaster.aac" type="audio/aac">
+        <source src="./music/5premaster.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="content" id="mainContent">
+        <h1 class="title"><span id="titleText"></span></h1>
+        <div class="language-selector">
+             <span class="lang-option" id="lang-it">ITA</span> | <span class="lang-option" id="lang-en">ENG</span>
+        </div>
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-bar"><div class="loading-progress" id="loadingProgress"></div></div>
+            <div class="loading-text" id="loadingText"></div>
+        </div>
+        <a href="#" class="start-button" id="startButton"></a>
+    </div>
+    
+    <div id="audioUnlocker">
+        <div id="audioUnlockerBox">
+            <div id="unlockTutorialContainer">
+                <p id="unlockInstructionText"></p>
+                <div id="unlockInstructionImageContainer">
+                    <img id="unlockInstructionImage" src="" alt="Istruzione tutorial">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-sequence-container" id="introSequenceContainer">
+        <div class="video-wrapper">
+            <video id="introVideo" muted playsinline src="" alt="Intro Sequence"></video>
+            <div id="introCaption" class="caption"></div>
+        </div>
+    </div>
+    
+    <div class="content" style="display: none;" id="finalInstructionsContent">
+         <div class="instruction" id="instruction1"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- ELEMENTI UI ---
+            const mainContent = document.getElementById('mainContent'),
+                  startButton = document.getElementById('startButton'),
+                  introMusic = document.getElementById('introMusic'),
+                  introSequenceContainer = document.getElementById('introSequenceContainer'),
+                  introVideo = document.getElementById('introVideo'),
+                  introCaption = document.getElementById('introCaption'),
+                  audioUnlocker = document.getElementById('audioUnlocker'),
+                  unlockInstructionText = document.getElementById('unlockInstructionText'),
+                  unlockInstructionImageContainer = document.getElementById('unlockInstructionImageContainer'),
+                  unlockInstructionImage = document.getElementById('unlockInstructionImage'),
+                  loadingContainer = document.getElementById('loadingContainer'),
+                  loadingProgress = document.getElementById('loadingProgress'),
+                  loadingText = document.getElementById('loadingText'),
+                  finalInstructionsContent = document.getElementById('finalInstructionsContent'),
+                  instruction1 = document.getElementById('instruction1'),
+                  titleText = document.getElementById('titleText'),
+                  langIt = document.getElementById('lang-it'),
+                  langEn = document.getElementById('lang-en');
+
+            // --- VARIABILI DI STATO ---
+            let activeTimers = [], autoSkipTimer, audioContext, currentLang = 'it';
+            let isAudioInitialized = false, isUnlocked = false;
+
+            // --- TRADUZIONI E LINGUA ---
+            const translations = {
+                it: { 
+                    title: "SUONATORE D'AUTOBUS", 
+                    loading: "CARICAMENTO", 
+                    startButton: "Sali",
+                    startButtonHref: "suonatore.html",
+                    unlock_steps: [
+                        { text: "indossa le cuffie se puoi", image: "./images/cuffie.jpg" },
+                        { text: "alza il volume", image: "./images/volume.jpg" },
+                        { text: "tocca/clicca ovunque per andare avanti", image: "./images/avanti.jpg" }
+                    ],
+                    finalPrompt1: "toccare/cliccare ovunque per andare avanti", 
+                    finalPrompt2: "hey suonatore.",
+                    steps: [
+                        { video: './images/intro1.mp4', duration: 5000, subtitles: [{ text: `Suonatore d'Autobus`, delay: 1000, duration: 3000, className: 'credit-text credit-pos-right' }] },
+                        { video: './images/intro2.mp4', duration: 16000, subtitles: [{ text: `una notte il signore ebbe un'avventura incredibile:`, delay: 500, duration: 3500 }, { text: `era uscito in strada per prendere l'autobus, senza pensieri particolari né idee varie.`, delay: 4500, duration: 4000 }, { text: `<em>e la trama si era fatta più convincente.</em>.`, delay: 9000, duration: 3000 }, { text: `c'era il satanismo, la tranquillità.`, delay: 12500, duration: 2500 }, { text: `c'era il satanismo, la`, delay: 15000 }] },
+                        { video: './images/intro3.mp4', duration: 13000, subtitles: [{ text: `<em>poi si confondeva e non si ricordava la storia.</em> `, delay: 500, duration: 4500 }, { text: `e allora se la ripeteva e doveva soltanto toccare/cliccare ovunque per andare avanti o vabbè l'autobus.`, delay: 5500, duration: 5000 }, { text: `<em>anche se siamo scimmie teniamo la tecnologia.</em>`, delay: 11000, duration: 1500 }, { text: `anche se siamo scimmie teniamo la`, delay: 12500 }] }
+                    ]
+                },
+                en: { 
+                    title: "BUS PLAYER", 
+                    loading: "LOADING", 
+                    startButton: "Get In",
+                    startButtonHref: "busplayer.html",
+                    unlock_steps: [
+                        { text: "wear headphones if you can", image: "./images/cuffie.jpg" },
+                        { text: "turn up the volume", image: "./images/volume.jpg" },
+                        { text: "touch/click anywhere to continue", image: "./images/avanti.jpg" }
+                    ],
+                    finalPrompt1: "touch/click anywhere to continue", 
+                    finalPrompt2: "hey player.",
+                    steps: [
+                        { video: './images/intro1.mp4', duration: 5000, subtitles: [{ text: `Words and music by Carlo Martinelli`, delay: 1000, duration: 3000, className: 'credit-text credit-pos-right' }] },
+                        { video: './images/intro2.mp4', duration: 16000, subtitles: [{ text: `one night the gentleman had an incredible adventure:`, delay: 500, duration: 3500 }, { text: `he had gone out into the street to catch the bus, with no particular thoughts or ideas.`, delay: 4500, duration: 4000 }, { text: `<em>and the plot had become more convincing</em>.`, delay: 9000, duration: 3000 }, { text: `there was satanism, tranquility.`, delay: 12500, duration: 2500 }, { text: `there was satanism, the`, delay: 15000 }] },
+                        { video: './images/intro3.mp4', duration: 13000, subtitles: [{ text: `<em>then he would get confused and couldn't remember the story.</em>`, delay: 500, duration: 4500 }, { text: `and so he repeated it to himself and just had to touch/click anywhere to move on or well, the bus.`, delay: 5500, duration: 5000 }, { text: `<em>even though we are monkeys, we have technology.</em>`, delay: 11000, duration: 1500 }, { text: `even though we are monkeys, we have the`, delay: 12500 }] }
+                    ]
+                }
+            };
+
+            function setLanguage(lang) {
+                currentLang = lang; 
+                const c = translations[lang]; 
+                titleText.innerHTML = c.title;
+                startButton.textContent = c.startButton;
+                startButton.href = c.startButtonHref; 
+                loadingText.textContent = `${c.loading} 0%`;
+                langIt.classList.toggle('active', lang === 'it'); 
+                langEn.classList.toggle('active', lang === 'en');
+            }
+            langIt.addEventListener('click', () => setLanguage('it')); 
+            langEn.addEventListener('click', () => setLanguage('en'));
+            
+            function simulateLoading() {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 1;
+                    const displayProgress = Math.floor(progress);
+                    loadingProgress.style.width = `${displayProgress}%`;
+                    loadingText.textContent = `${translations[currentLang].loading} ${displayProgress}%`;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            loadingContainer.classList.add('hidden');
+                            startButton.classList.add('visible');
+                        }, 300);
+                    }
+                }, 40);
+            }
+            
+            async function initAndPlayAudio() {
+                if (!isAudioInitialized) {
+                    try {
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        const source = audioContext.createMediaElementSource(introMusic);
+                        source.connect(audioContext.destination);
+                        isAudioInitialized = true;
+                    } catch (e) { console.error("Errore Creazione AudioContext:", e); }
+                }
+                if (audioContext && audioContext.state === 'suspended') { await audioContext.resume(); }
+                try {
+                    introMusic.loop = true;
+                    introMusic.volume = 0.4;
+                    await introMusic.play();
+                } catch (error) { console.error("Errore durante introMusic.play():", error); }
+            }
+
+            setLanguage('it');
+            simulateLoading();
+
+            function playUnlockTutorial() {
+                const steps = translations[currentLang].unlock_steps;
+                let currentStepIndex = 0;
+
+                function showStep(index) {
+                    // 1. Nasconde il contenuto corrente
+                    unlockInstructionText.style.opacity = 0;
+                    unlockInstructionImageContainer.style.opacity = 0;
+
+                    // 2. Attende la fine della transizione per aggiornare il contenuto
+                    setTimeout(() => {
+                        const step = steps[index];
+                        unlockInstructionText.textContent = step.text;
+                        unlockInstructionImage.src = step.image;
+
+                        // 3. Mostra il nuovo contenuto
+                        unlockInstructionText.style.opacity = 1;
+                        unlockInstructionImageContainer.style.opacity = 1;
+
+                        // 4. Se non è l'ultimo step, programma il successivo
+                        if (index < steps.length - 1) {
+                            setTimeout(() => showStep(index + 1), 1500);
+                        } else {
+                            // 5. Se è l'ultimo step, aggiunge un'animazione per invitare al click
+                            unlockInstructionText.classList.add('prompt-pulse');
+                        }
+                    }, 400); // Durata della transizione di opacity
+                }
+
+                showStep(0); // Avvia la sequenza dal primo step
+            }
+
+            startButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                mainContent.style.display = 'none';
+                isUnlocked = false; 
+                
+                unlockInstructionText.classList.remove('prompt-pulse');
+                audioUnlocker.style.display = 'flex';
+                
+                playUnlockTutorial();
+            });
+
+            audioUnlocker.addEventListener('click', function() {
+                if (isUnlocked) return;
+                isUnlocked = true;
+
+                audioUnlocker.style.display = 'none';
+                introSequenceContainer.classList.add('visible');
+                playIntroSequence();
+                initAndPlayAudio();
+            });
+
+            function playIntroSequence() {
+                const steps = translations[currentLang].steps;
+                let currentStepIndex = 0;
+
+                const nextStepHandler = () => {
+                    clearTimeout(autoSkipTimer);
+                    currentStepIndex++;
+                    
+                    if (currentStepIndex >= steps.length) {
+                        introSequenceContainer.removeEventListener('click', nextStepHandler);
+                        endIntroSequence();
+                    } else {
+                        showStep(currentStepIndex);
+                    }
+                };
+
+                function showStep(index) {
+                    activeTimers.forEach(clearTimeout);
+                    activeTimers = [];
+
+                    const step = steps[index];
+                    introVideo.src = step.video;
+                    introVideo.load();
+                    introVideo.play().catch(e => console.log("Autoplay del video bloccato."));
+
+                    introCaption.classList.remove('visible');
+                    step.subtitles.forEach((sub) => {
+                        let timerIn = setTimeout(() => {
+                           introCaption.innerHTML = sub.text;
+                           introCaption.className = 'caption'; 
+                           if (sub.className) {
+                               sub.className.split(' ').forEach(c => introCaption.classList.add(c));
+                           } else {
+                               introCaption.classList.add('caption-default'); 
+                           }
+                           introCaption.classList.add('visible');
+                        }, sub.delay);
+                        activeTimers.push(timerIn);
+                        if(sub.duration) {
+                           let timerOut = setTimeout(() => introCaption.classList.remove('visible'), sub.delay + sub.duration);
+                           activeTimers.push(timerOut);
+                        }
+                    });
+                    autoSkipTimer = setTimeout(nextStepHandler, step.duration);
+                }
+                
+                showStep(currentStepIndex);
+                introSequenceContainer.addEventListener('click', nextStepHandler);
+            }
+
+            function endIntroSequence() {
+                clearTimeout(autoSkipTimer);
+                activeTimers.forEach(clearTimeout);
+
+                let fadeAudio = setInterval(() => {
+                    if (introMusic.volume > 0.01) { introMusic.volume -= 0.05; }
+                    else { introMusic.pause(); clearInterval(fadeAudio); }
+                }, 100);
+
+                introSequenceContainer.style.transition = 'opacity 1s ease-out';
+                introSequenceContainer.style.opacity = '0';
+                setTimeout(() => {
+                    introSequenceContainer.style.display = 'none';
+                    finalInstructionsContent.style.display = 'flex';
+                    instruction1.innerHTML = translations[currentLang].finalPrompt1;
+                    instruction1.style.cursor = 'pointer';
+                    instruction1.classList.add('visible');
+                    document.addEventListener('click', handleFinalPrompt1, { once: true });
+                    document.addEventListener('touchstart', handleFinalPrompt1, { once: true });
+                }, 1000);
+            }
+            function handleFinalPrompt1() {
+                instruction1.style.opacity = '0';
+                setTimeout(() => {
+                    instruction1.innerHTML = translations[currentLang].finalPrompt2;
+                    instruction1.style.opacity = '1';
+                    document.addEventListener('click', redirectToNextPage, { once: true });
+                    document.addEventListener('touchstart', redirectToNextPage, { once: true });
+                }, 500);
+            }
+            function redirectToNextPage() {
+                document.body.style.transition = 'opacity 0.5s ease-out';
+                document.body.style.opacity = '0';
+                setTimeout(() => { window.location.href = startButton.href; }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
