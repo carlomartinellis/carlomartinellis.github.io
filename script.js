@@ -28,9 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
             profileContainer.style.transform = 'scale(1)';
         }
 
+        // Eventi mouse (desktop)
         profileContainer.addEventListener('mousedown', playAudio);
         profileContainer.addEventListener('mouseup', stopAudio);
         profileContainer.addEventListener('mouseleave', stopAudio);
+
+        // Eventi touch (mobile)
+        profileContainer.addEventListener('touchstart', playAudio);
+        profileContainer.addEventListener('touchend', stopAudio);
+        profileContainer.addEventListener('touchcancel', stopAudio);
     }
 
     let particles = [];
