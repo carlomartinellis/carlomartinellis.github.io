@@ -1,39 +1,151 @@
-/* Importa il font Inconsolata da Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
 
 :root {
-    /* Nuova Palette di Colori: Rosso-Marrone-Rosa-Bianco Acido */
-    --bg-color: #000000;         /* Nero assoluto (Sfondo) */
-    --text-color: #F0F0F0;       /* Bianco quasi puro (Testo) */
-    --acid-accent: #FF3366;      /* Rosso-Rosa Acido (Dominante) */
-    --idle-glitch-color: #552222; /* Marrone scuro / Rosso spento (Puntini inattivi, Bordo immagine inattivo) */
-    --glitch-point-color: var(--idle-glitch-color); /* Alias per coerenza con lo script JS */
+    --bg-color: #000000;
+    --text-color: #F0F0F0;
+    --acid-accent: #FF3366;
+    --idle-glitch-color: #552222;
+    --glitch-point-color: var(--idle-glitch-color);
 }
 
-/* Stili Globali e Reset */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Inconsolata', monospace; 
-    background-color: var(--bg-color);
+    font-family: 'Inconsolata', monospace;
     color: var(--text-color);
-    display: flex; 
+    display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    min-height: 100vh; 
-    overflow-x: hidden; 
-    position: relative; 
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: #000;
 }
 
-/* Contenitore Principale */
+/* LAYER STATICO BASE */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("immagine.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* EFFETTO ACQUA INCRESPATA - Layer 1 */
+body::after {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    background-image: url("immagine.png");
+    background-size: 110% 110%;
+    background-position: center;
+    opacity: 0.25;
+    z-index: 1;
+    pointer-events: none;
+    animation: waterRipple1 8s ease-in-out infinite;
+    filter: blur(1px) saturate(1.2);
+}
+
+/* EFFETTO ACQUA - Layer 2 (controfase) */
+.water-layer-2 {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    background-image: url("immagine.png");
+    background-size: 115% 115%;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 2;
+    pointer-events: none;
+    animation: waterRipple2 12s ease-in-out infinite;
+    filter: blur(2px) saturate(1.2) hue-rotate(5deg);
+}
+
+/* EFFETTO ACQUA - Layer 3 (onde lente) */
+.water-layer-3 {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    background-image: url("immagine.png");
+    background-size: 120% 120%;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 3;
+    pointer-events: none;
+    animation: waterRipple3 15s ease-in-out infinite;
+    filter: blur(3px) saturate(1.3) hue-rotate(8deg);
+}
+
+/* ANIMAZIONI ONDE ACQUA - VERSIONE LEGGERA */
+@keyframes waterRipple1 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 0% 0% 0% 0%;
+    }
+    25% {
+        transform: translate(0.8%, -0.5%) scale(1.01);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+        transform: translate(0%, 0.8%) scale(1.015);
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+    75% {
+        transform: translate(-0.5%, 0.3%) scale(1.01);
+        border-radius: 40% 60% 60% 40% / 70% 30% 60% 40%;
+    }
+}
+
+@keyframes waterRipple2 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        border-radius: 0% 0% 0% 0%;
+    }
+    33% {
+        transform: translate(-0.5%, 0.8%) scale(1.01) rotate(0.2deg);
+        border-radius: 50% 40% 60% 50% / 40% 60% 40% 60%;
+    }
+    66% {
+        transform: translate(0.5%, -0.5%) scale(1.015) rotate(-0.2deg);
+        border-radius: 40% 50% 40% 60% / 60% 40% 60% 40%;
+    }
+}
+
+@keyframes waterRipple3 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 0% 0% 0% 0%;
+    }
+    20% {
+        transform: translate(0.3%, 0.5%) scale(1.008);
+        border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+    }
+    40% {
+        transform: translate(-0.3%, -0.3%) scale(1.012);
+        border-radius: 55% 45% 40% 60% / 45% 55% 45% 55%;
+    }
+    60% {
+        transform: translate(0.5%, -0.5%) scale(1.015);
+        border-radius: 50% 50% 50% 50% / 60% 40% 60% 40%;
+    }
+    80% {
+        transform: translate(-0.3%, 0.3%) scale(1.01);
+        border-radius: 40% 60% 55% 45% / 50% 50% 50% 50%;
+    }
+}
+
 .container {
-    max-width: 90%; 
-    width: 360px; 
+    max-width: 90%;
+    width: 360px;
     padding: 20px 15px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     text-align: center;
-    position: relative; 
-    z-index: 10; 
+    position: relative;
+    z-index: 10;
 }
 
 /* --- NUOVI STILI PER LA PAGINA BIO --- */
@@ -48,8 +160,8 @@ body {
 }
 
 .large-text {
-    font-size: 1.2em; /* Testo leggermente più grande per la bio */
-    max-width: 450px; /* Consente al testo di occupare più spazio su schermi più grandi */
+    font-size: 1.2em;
+    max-width: 450px;
 }
 
 .bio-link {
@@ -68,7 +180,7 @@ body {
 
 .highlight {
     color: var(--text-color);
-    background-color: var(--idle-glitch-color); /* Lo sfondo scuro crea un effetto "glitch" */
+    background-color: var(--idle-glitch-color);
     padding: 2px 4px;
     margin: 0 -2px;
     font-weight: bold;
@@ -76,18 +188,17 @@ body {
 
 /* --- FINE NUOVI STILI BIO --- */
 
-/* Immagine Profilo */
 .profile-pic-container {
     position: relative;
-    width: 140px; 
+    width: 140px;
     height: 140px;
-    margin: 30px auto 25px auto; 
+    margin: 30px auto 25px auto;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    transition: transform 0.1s ease-out; 
+    transition: transform 0.1s ease-out;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
@@ -95,17 +206,16 @@ body {
 }
 
 .profile-pic {
-    width: 120px; 
+    width: 120px;
     height: 120px;
     border-radius: 50%;
-    object-fit: cover; 
-    display: block; 
+    object-fit: cover;
+    display: block;
     border: 2px solid var(--idle-glitch-color);
     transition: border-color 0.3s ease;
     pointer-events: none;
 }
 
-/* Animazione Glitch per il Bordo dell'Immagine */
 .profile-pic-border-glitch {
     position: absolute;
     top: 0;
@@ -113,11 +223,11 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 2px solid transparent; 
+    border: 2px solid transparent;
     box-sizing: border-box;
-    pointer-events: none; 
-    animation: glitchBorder 1.5s infinite linear; 
-    mix-blend-mode: screen; 
+    pointer-events: none;
+    animation: glitchBorder 1.5s infinite linear;
+    mix-blend-mode: screen;
 }
 
 @keyframes glitchBorder {
@@ -131,40 +241,36 @@ body {
     100% { border-color: transparent; }
 }
 
-
-/* Testo Biografico */
 .bio-text {
-    font-size: 1em; 
+    font-size: 1em;
     line-height: 1.6;
-    margin-bottom: 40px; 
-    white-space: pre-line; 
-    max-width: 300px; 
+    margin-bottom: 40px;
+    white-space: pre-line;
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Contenitore Links */
 .links-container {
     display: flex;
-    flex-direction: column; 
-    gap: 18px; 
+    flex-direction: column;
+    gap: 18px;
 }
 
-/* Stile dei Pulsanti Link (Aggiornato con Rosso Acido) */
 .link-button {
-    display: block; 
+    display: block;
     padding: 15px 20px;
-    background-color: transparent; 
+    background-color: transparent;
     border: 2px solid var(--acid-accent);
     color: var(--acid-accent);
     text-decoration: none;
     font-size: 1.1em;
     font-weight: bold;
     text-transform: uppercase;
-    border-radius: 0; 
-    transition: all 0.2s ease-in-out; 
-    position: relative; 
-    overflow: hidden; 
+    border-radius: 0;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
 }
 
 .link-button:hover,
@@ -172,11 +278,10 @@ body {
     background-color: var(--acid-accent);
     color: var(--bg-color);
     box-shadow: 0 0 15px var(--acid-accent);
-    transform: scale(1.02); 
-    border-color: var(--acid-accent); 
+    transform: scale(1.02);
+    border-color: var(--acid-accent);
 }
 
-/* Animazione "glitch" al hover sui pulsanti */
 .link-button::before {
     content: '';
     position: absolute;
@@ -185,8 +290,8 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: none; 
-    z-index: 1; 
+    transition: none;
+    z-index: 1;
 }
 
 .link-button:hover::before {
@@ -198,26 +303,39 @@ body {
     100% { left: 100%; }
 }
 
-/* Canvas di Sfondo per l'Animazione JS */
-#glitchCanvas {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100vw; 
-    height: 100vh; 
-    z-index: 1; 
-    pointer-events: none; 
+/* LINK PSICHEDELICO CONTINUO */
+.featured {
+    animation: psycho 7s linear infinite;
+    border-width: 3px;
 }
 
-/* Media Query per schermi più grandi (Desktop/Tablet) */
+@keyframes psycho {
+    0%   { background-color: #ff3366; color: #000000; }
+    25%  { background-color: #7a00ff; color: #ffffff; }
+    50%  { background-color: #00ffd5; color: #000000; }
+    75%  { background-color: #ffae00; color: #000000; }
+    100% { background-color: #ff3366; color: #000000; }
+}
+
+#glitchCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Media Query per schermi più grandi */
 @media (min-width: 768px) {
     .container {
-        width: 400px; 
+        width: 400px;
         padding: 40px 20px;
     }
 
     .profile-pic-container {
-        margin-top: 50px; 
+        margin-top: 50px;
     }
 
     .bio-text {
