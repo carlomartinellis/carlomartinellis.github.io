@@ -27,12 +27,30 @@
     }
 
     body, .page, .line, .titolo { user-select: none; -webkit-user-select: none; -ms-user-select: none; }
-    .page { display: flex; flex-direction: column; gap: 1em; padding-right: 140px; position: relative; z-index: 10; }
+    .page { display: flex; flex-direction: column; gap: 1em; padding-right: 140px; position: relative; z-index: 10; transition: opacity 0.4s ease, filter 0.4s ease; }
+    /* Dissolvenza "voltar pagina" */
+    .page.page-turning { opacity: 0; filter: blur(3px); }
     .first-page { background: white; color: black; }
     .other-page { background: black; color: white; }
     .line { opacity: 0; transition: opacity 0.5s ease-in; }
     .titolo { font-weight: bold; font-size: calc(1.2em + 5pt); animation: trembleAndFade 1.4s ease-in-out forwards; display:inline-block }
     .line.visible { opacity: 1; }
+
+    /* Indicatore discreto che invita al click */
+    .continue-indicator {
+      font-size: 0.85em;
+      line-height: 1;
+      margin-top: -0.4em;
+      opacity: 0;
+      animation: pulseIndicator 1.8s ease-in-out infinite;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: none;
+    }
+    @keyframes pulseIndicator {
+      0%, 100% { opacity: 0.15; transform: translateY(0); }
+      50% { opacity: 0.55; transform: translateY(3px); }
+    }
     
     #pixel-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
 
@@ -99,6 +117,11 @@
 
     #toggle-ui { font-size: 24px; cursor: pointer; opacity: 0.6; transition: all 0.2s; margin-top: 10px; }
     #toggle-ui:hover { opacity: 1; transform: scale(1.1); }
+
+    /* Su mobile il controllo volume è inutile (il volume si gestisce dai tasti hardware) */
+    @media (max-width: 768px), (pointer: coarse) {
+      .volume-control { display: none; }
+    }
     
     #top-right-controls.debug-hidden .toggable-controls,
     #top-right-controls.debug-hidden #toggle-ui,
@@ -181,6 +204,14 @@
         let pages = [], currentPageLines = [], pageIndex = 0, lineIndex = 0, firstPageDisplayed = false;
         let audioUnlocked = false, currentTrackIndex = 0, isLineInProgress = false, creditsAreShowing = false;
         let playedSoundsThisPage = new Set(), soundRotationCounters = {}, currentSceneImage = null;
+        let isPageTurning = false;
+
+        // --- Indicatore "clicca per continuare" ---
+        const continueIndicator = document.createElement('div');
+        continueIndicator.className = 'continue-indicator';
+        continueIndicator.textContent = '▾';
+        function showContinueIndicator() { const pc = document.getElementById('page'); if (pc) pc.appendChild(continueIndicator); }
+        function hideContinueIndicator() { if (continueIndicator.parentNode) continueIndicator.remove(); }
         
         // --- Elementi DOM ---
         const bgm = document.getElementById('bgm'), pageContainer = document.getElementById('page');
@@ -256,7 +287,6 @@
         
         // COLORCHANGE: Modifica la durata (in millisecondi) qui sotto.
         function triggerPixelColorChange(color, duration = 5000) { 
-            console.log(`DEBUG: triggerPixelColorChange chiamato con colore ${color} e durata ${duration}`);
             if (pageIndex >= 48) return; 
             isColorChanging = true; 
             targetColor = color; 
@@ -290,11 +320,13 @@
         function loadBookmarkedProgress(){try{const a=JSON.parse(localStorage.getItem(STORAGE_KEY));if(a&&a.pageIndex>=0&&a.pageIndex<pages.length)return goToPage(a.pageIndex,a.lineIndex,!0),!0}catch(a){}return!1}
 
         // --- Navigazione ---
-        function goToPage(a,e=0,t=!1){if(!(a<0||a>=pages.length)){unlockAudio(),stopRain(); const oldPageIndex = pageIndex; pageIndex=a,lineIndex=e,currentPageLines=pages[pageIndex]||[],pageContainer.innerHTML="",firstPageDisplayed=0!==pageIndex,playedSoundsThisPage.clear(),currentSceneImage&&(document.getElementById("scene-image").style.opacity="0",currentSceneImage=null),firstPageDisplayed?(()=>{for(let a=0;a<e;a++)if(currentPageLines[a]){const e=document.createElement("div");e.className="line visible",e.innerHTML=applySpecialStyles(currentPageLines[a]),pageContainer.appendChild(e)}e<currentPageLines.length&&nextLine(!0)})():(()=>{const a=document.createElement("div");a.textContent=pages[0]?pages[0].join(" "):"",pageContainer.appendChild(a)})(),updatePixelThemeForPage(t,oldPageIndex),updateBGMForPage(pageIndex),rainPages.includes(pageIndex)&&setTimeout(startRain,1e3),lightningPages.includes(pageIndex)&&setTimeout(showLightning,1500),updateDebugInfo(),t||saveProgress(),window.scrollTo({top:0,behavior:"smooth"})}}
-        function handleClick(){unlockAudio(),bgm.src||(playTrack(0,!0),updateBGMForPage(pageIndex)),firstPageDisplayed?nextLine():goToPage(1)}
-        function nextLine(a=!1){if(!isLineInProgress&&currentPageLines){if(lineIndex>=currentPageLines.length)return void nextPage();isLineInProgress=!0;const e=currentPageLines[lineIndex],t=imageTriggers.find(a=>a.page===pageIndex&&e.toLowerCase().includes(a.match.toLowerCase()));t&&(t.display==="inline"?showInlineMedia(t):t.persistUntilPageChange?showSceneImagePersistent(t.src):showSceneImage(t.src,t.duration));const n=e.toLowerCase();if(vortexWords.some(a=>n.includes(a.toLowerCase()))&&triggerVortex(),Object.keys(colorChangeWords).forEach(a=>{n.includes(a)&&triggerPixelColorChange(colorChangeWords[a])}),!a){let t=null,o=null;for(const[s,i]of Object.entries(soundEffects))n.includes(s.toLowerCase())&&(!t||s.length>o.length)&&(o=s,t=Array.isArray(i)?i[soundRotationCounters[s]||0]:i);t&&!playedSoundsThisPage.has(o)&&(playSound(t),playedSoundsThisPage.add(o),Array.isArray(soundEffects[o])&&(soundRotationCounters[o]=(soundRotationCounters[o]||0)+1%soundEffects[o].length))}const o=document.createElement("div");o.className="line",o.innerHTML=applySpecialStyles(e),pageContainer.appendChild(o),setTimeout(()=>{o.classList.add("visible"),isLineInProgress=!1,a||autoScrollToCurrentLine(o)},10),lineIndex++,a||(updateDebugInfo(),saveProgress())}}
-        function nextPage(){pageIndex<pages.length-1?goToPage(pageIndex+1):(triggerPixelCollapse(),setTimeout(showCredits,2e3))}
-        function previousPage(){pageIndex>0&&goToPage(pageIndex-1)}
+        function goToPage(a,e=0,t=!1){if(!(a<0||a>=pages.length)){unlockAudio(),stopRain(); const oldPageIndex = pageIndex; pageIndex=a,lineIndex=e,currentPageLines=pages[pageIndex]||[],pageContainer.innerHTML="",firstPageDisplayed=0!==pageIndex,playedSoundsThisPage.clear(),currentSceneImage&&(document.getElementById("scene-image").style.opacity="0",currentSceneImage=null),firstPageDisplayed?(()=>{for(let a=0;a<e;a++)if(currentPageLines[a]){const e=document.createElement("div");e.className="line visible",e.innerHTML=applySpecialStyles(currentPageLines[a]),pageContainer.appendChild(e)}e<currentPageLines.length?nextLine(!0):showContinueIndicator()})():(()=>{const a=document.createElement("div");a.textContent=pages[0]?pages[0].join(" "):"",pageContainer.appendChild(a),showContinueIndicator()})(),updatePixelThemeForPage(t,oldPageIndex),updateBGMForPage(pageIndex),rainPages.includes(pageIndex)&&setTimeout(startRain,1e3),lightningPages.includes(pageIndex)&&setTimeout(showLightning,1500),updateDebugInfo(),t||saveProgress(),window.scrollTo({top:0,behavior:"smooth"})}}
+        function handleClick(){unlockAudio(),bgm.src||(playTrack(0,!0),updateBGMForPage(pageIndex)),firstPageDisplayed?nextLine():turnPageWithFade(()=>goToPage(1))}
+        function nextLine(a=!1){if(!isLineInProgress&&!isPageTurning&&currentPageLines){if(lineIndex>=currentPageLines.length)return void nextPage();isLineInProgress=!0;hideContinueIndicator();const e=currentPageLines[lineIndex],t=imageTriggers.find(a=>a.page===pageIndex&&e.toLowerCase().includes(a.match.toLowerCase()));t&&(t.display==="inline"?showInlineMedia(t):t.persistUntilPageChange?showSceneImagePersistent(t.src):showSceneImage(t.src,t.duration));const n=e.toLowerCase();if(vortexWords.some(a=>n.includes(a.toLowerCase()))&&triggerVortex(),Object.keys(colorChangeWords).forEach(a=>{n.includes(a)&&triggerPixelColorChange(colorChangeWords[a])}),!a){let t=null,o=null;for(const[s,i]of Object.entries(soundEffects))n.includes(s.toLowerCase())&&(!t||s.length>o.length)&&(o=s,t=Array.isArray(i)?i[soundRotationCounters[s]||0]:i);t&&!playedSoundsThisPage.has(o)&&(playSound(t),playedSoundsThisPage.add(o),Array.isArray(soundEffects[o])&&(soundRotationCounters[o]=(soundRotationCounters[o]||0)+1%soundEffects[o].length))}const o=document.createElement("div");o.className="line",o.innerHTML=applySpecialStyles(e),pageContainer.appendChild(o),        setTimeout(()=>{o.classList.add("visible"),isLineInProgress=!1,showContinueIndicator(),a||autoScrollToCurrentLine(o)},10),lineIndex++,a||(updateDebugInfo(),saveProgress())}}
+                // Wrapper con dissolvenza "voltar pagina"
+                function turnPageWithFade(turnFn){if(isPageTurning)return;isPageTurning=!0;hideContinueIndicator();pageContainer.classList.add('page-turning');setTimeout(()=>{turnFn();pageContainer.classList.remove('page-turning');isPageTurning=!1},400)}
+                function nextPage(){turnPageWithFade(()=>{pageIndex<pages.length-1?goToPage(pageIndex+1):(triggerPixelCollapse(),setTimeout(showCredits,2e3))})}
+                function previousPage(){if(pageIndex>0)turnPageWithFade(()=>goToPage(pageIndex-1))}
 
         // --- Utilità e Rendering ---
         function updatePixelThemeForPage(isBookmarkLoad, oldPageIndex) {
@@ -327,19 +359,18 @@
         function updateDebugInfo(){debugDisplay&&(debugDisplay.textContent=`P: ${pageIndex} | L: ${lineIndex}/${currentPageLines.length||0}`)}
         
         // --- Titoli di Coda ---
-        async function showCredits(){if(creditsAreShowing)return;console.log("CREDITS DEBUG: Avvio di showCredits.");creditsAreShowing=!0,stopRain(),bgm&&bgm.pause(),document.getElementById("page").style.display="none",document.getElementById("top-right-controls").style.display="none",document.body.className="",document.body.style.background="black";const a=[{src:"./images/credits1.jpg",position:"position-left"},{src:"./images/credits2.jpg",position:"position-right"},{src:"./images/credits3.jpg",position:"position-left"},{src:"./images/credits4.jpg",position:"position-right"}],e=["./images/credits.gif","./images/credits1.gif"],t=document.createElement("div");t.className="credits-container";const n=document.createElement("div");n.className="credits-bg-container";const o=document.createElement("div");o.className="credits-content";let s,i;try{const r=await fetch("credits.txt");if(console.log("CREDITS DEBUG: Fetch 'credits.txt' completato.",r),!r.ok)throw new Error("Risposta non OK per credits.txt");const d=await r.text();o.innerHTML=d.split("\n").join("<br>"),document.body.appendChild(t),t.appendChild(n),t.appendChild(o);
+        async function showCredits(){if(creditsAreShowing)return;creditsAreShowing=!0,stopRain(),bgm&&bgm.pause(),document.getElementById("page").style.display="none",document.getElementById("top-right-controls").style.display="none",document.body.className="",document.body.style.background="black";const a=[{src:"./images/credits1.jpg",position:"position-left"},{src:"./images/credits2.jpg",position:"position-right"},{src:"./images/credits3.jpg",position:"position-left"},{src:"./images/credits4.jpg",position:"position-right"}],e=["./images/credits.gif","./images/credits1.gif"],t=document.createElement("div");t.className="credits-container";const n=document.createElement("div");n.className="credits-bg-container";const o=document.createElement("div");o.className="credits-content";let s,i;try{const r=await fetch("credits.txt");if(!r.ok)throw new Error("Risposta non OK per credits.txt");const d=await r.text();o.innerHTML=d.split("\n").join("<br>"),document.body.appendChild(t),t.appendChild(n),t.appendChild(o);
         
         void t.offsetWidth; 
         t.style.opacity = '1';
 
-        const c=new Audio("./music/credits.ogg");console.log("CREDITS DEBUG: Creato oggetto Audio."),await new Promise((a,e)=>{c.addEventListener("loadedmetadata",a),c.addEventListener("error",()=>e(new Error("Audio dei credits non caricato."))),setTimeout(()=>e(new Error("Timeout caricamento audio.")),1e4)});const l=c.duration;if(console.log(`CREDITS DEBUG: Durata audio: ${l} secondi.`),!l||0===l)throw new Error("Durata audio non valida.");const m=o.scrollHeight,g=document.createElement("style");g.innerText=`@keyframes dynamicScrollTheCredits { from { transform: translate(-50%, ${window.innerHeight}px); } to { transform: translate(-50%, -${m}px); } }`,document.head.appendChild(g),o.style.animation=`dynamicScrollTheCredits ${l}s linear forwards`;
+        const c=new Audio("./music/credits.ogg");await new Promise((a,e)=>{c.addEventListener("loadedmetadata",a),c.addEventListener("error",()=>e(new Error("Audio dei credits non caricato."))),setTimeout(()=>e(new Error("Timeout caricamento audio.")),1e4)});const l=c.duration;if(!l||0===l)throw new Error("Durata audio non valida.");const m=o.scrollHeight,g=document.createElement("style");g.innerText=`@keyframes dynamicScrollTheCredits { from { transform: translate(-50%, ${window.innerHeight}px); } to { transform: translate(-50%, -${m}px); } }`,document.head.appendChild(g),o.style.animation=`dynamicScrollTheCredits ${l}s linear forwards`;
         
         let fastForwardEnabled = false;
         t.style.cursor = 'pointer';
         const fastForwardHandler = () => {
             if (fastForwardEnabled) return;
             fastForwardEnabled = true;
-            console.log("CREDITS DEBUG: Scorrimento veloce attivato.");
             const animations = o.getAnimations();
             if (animations && animations.length > 0) {
                 animations.forEach(anim => {
@@ -350,42 +381,34 @@
         };
         t.addEventListener('click', fastForwardHandler);
 
-        let h=0;const p=(l*1e3)/(a.length||1),u=()=>{console.log(`CREDITS DEBUG: Mostro immagine credits #${h}`);const e=t.querySelector(".credits-image.visible");e&&(e.classList.remove("visible"),setTimeout(()=>e.remove(),1500));if(h<a.length){const a_data=a[h],n_img=document.createElement("img");n_img.src=a_data.src,n_img.className=`credits-image ${a_data.position}`,n_img.onerror=()=>console.error(`CREDITS DEBUG: Immagine non trovata: ${n_img.src}`),t.appendChild(n_img),void n_img.offsetWidth,n_img.classList.add("visible"),h++}};
+        let h=0;const p=(l*1e3)/(a.length||1),u=()=>{const e=t.querySelector(".credits-image.visible");e&&(e.classList.remove("visible"),setTimeout(()=>e.remove(),1500));if(h<a.length){const a_data=a[h],n_img=document.createElement("img");n_img.src=a_data.src,n_img.className=`credits-image ${a_data.position}`,t.appendChild(n_img),void n_img.offsetWidth,n_img.classList.add("visible"),h++}};
         
         let w = 0;
         const y = (l * 1e3) / (e.length || 1),
         f = () => {
-            console.log(`CREDITS GIF DEBUG: Chiamata funzione f. Indice w attuale: ${w}`);
             const oldGif = n.querySelector(".credits-bg-image");
             if(oldGif) {
-                console.log(`CREDITS GIF DEBUG: Rimozione GIF precedente: ${oldGif.src}`);
                 oldGif.style.opacity = "0";
                 setTimeout(() => oldGif.remove(), 1500);
             }
 
             if (w < e.length) {
                 const gifSrc = e[w];
-                console.log(`CREDITS GIF DEBUG: Tentativo di mostrare la GIF: ${gifSrc}`);
                 const newGif = document.createElement("img");
                 newGif.src = gifSrc;
                 newGif.className = "credits-bg-image";
-                newGif.onload = () => console.log(`CREDITS GIF DEBUG: Caricata con successo: ${gifSrc}`);
-                newGif.onerror = () => console.error(`CREDITS GIF DEBUG: ERRORE caricamento: ${gifSrc}`);
                 
                 n.appendChild(newGif);
                 void newGif.offsetWidth;
                 newGif.style.opacity = "0.25";
                 
                 w++;
-                console.log(`CREDITS GIF DEBUG: Indice w incrementato a: ${w}`);
             } else {
-                console.log(`CREDITS GIF DEBUG: Indice w (${w}) ha superato il numero di GIF. Interrompo intervallo.`);
                 clearInterval(i);
             }
         };
 
         c.addEventListener("ended",()=>{
-            console.log("CREDITS DEBUG: Audio terminato.");
             clearInterval(s);
             clearInterval(i);
             document.head.contains(g)&&document.head.removeChild(g);
@@ -416,4 +439,4 @@
     });
   </script>
 </body>
-</ht
+</html>
